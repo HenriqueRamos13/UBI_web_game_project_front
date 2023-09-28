@@ -6,6 +6,10 @@ const socket = io("http://localhost:3001/", {
     transports: ["websocket"],
   });
 
+socket.on("connect", () => {
+    console.log("connected");
+})
+
 function setup() {
     createCanvas(400, 400);
 }
