@@ -8,7 +8,24 @@ async function login(e) {
     password: form.password.value,
   };
 
-  alert(JSON.stringify(body));
+  fetch(`${API_URL}/auth`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    credentials: "include",
+    body: JSON.stringify(body),
+  })
+    .then((x) => x.json())
+    .then((x) => {
+      if (x.token) {
+        localStorage.setItem("token", x.token);
+        window.location.href = "/game.html";
+      } else {
+        alert("erro " + x.message);
+      }
+    })
+    .catch((x) => alert(x.message));
 }
 
 async function register(e) {
