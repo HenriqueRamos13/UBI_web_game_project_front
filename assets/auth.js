@@ -34,14 +34,34 @@ async function register(e) {
   const form = e.target;
 
   const body = {
+    email: form.name.email,
     name: form.name.value,
-    email: form.email.value,
+    gender: form.gender.value,
     password: form.password.value,
   };
 
-  alert(JSON.stringify(body));
+  try {
+    const response = await fetch(`${API_URL}/signup`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+      body: JSON.stringify(body),
+    });
+
+    if (response.ok) {
+      alert("Registration successful. You can now log in.");
+    } else {
+      const errorData = await response.json();
+      alert("Registration error: " + errorData.message);
+    }
+  } catch (error) {
+    alert("An error occurred: " + error.message);
+  }
+
 }
 
 document.getElementById("login").addEventListener("submit", login);
 
-document.getElementById("register").addEventListener("submit", register);
+document.getElementById("singup").addEventListener("submit", signup);
