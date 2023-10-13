@@ -17,6 +17,7 @@ const SocketOnEvents = {
   CHAT_TO: "chat-to",
   DISCONNECT: "disconnect",
   PLAYERS: "players",
+  CHAT_ALERT: "chat-alert",
 };
 
 const STYLES = {
@@ -45,27 +46,30 @@ socket.on(SocketOnEvents.DISCONNECT, () => {
   console.log("disconnected");
 });
 
-socket.on(SocketOnEvents.ROOM, ({ turn, turnNumber, startedAt }) => {
-  console.log(22222222222);
+socket.on(SocketOnEvents.ROOM, (room) => {
+  if (!room) {
+    return;
+  }
+  const { turn, turnNumber, startedAt } = room;
   ROOM = room;
   const roomDiv = document.querySelector("#room");
   roomDiv.innerText = turn + " - " + turnNumber + " - " + startedAt;
 });
 
 socket.on(SocketOnEvents.PLAYERS, (data) => {
-  // save users data on USERS array, if already exists, update
+  if (!data) {
+    return;
+  }
   PLAYERS = data;
 
-  console.log(1111, PLAYERS);
-
-  // clear users container
   const playersContainer = document.querySelector("#users");
   playersContainer.innerHTML = "";
   PLAYERS.forEach((player) => {
     const playerDom = createPlayerDom(
       player.profile.name,
       player.id,
-      player.socketId
+      player.socketId,
+      player
     );
     appendUser(playerDom);
   });
@@ -93,20 +97,32 @@ function sendMessage() {
   msg.value = "";
 }
 
-function appendOnChat(message) {
+function appendOnChat(message, background = null) {
   const chat = document.querySelector("#chat");
   const msg = document.createElement("div");
-  msg.setAttribute("class", STYLES.messageChat);
+  msg.setAttribute(
+    "class",
+    background ? background + " " + STYLES.messageChat : STYLES.messageChat
+  );
   msg.innerText = message;
   chat.appendChild(msg);
 }
 
-function createPlayerDom(name, id, sockId) {
+function createPlayerDom(name, id, sockId, player) {
   const userDom = document.createElement("div");
   userDom.setAttribute("class", STYLES.userCard);
   userDom.innerText = name;
   userDom.setAttribute("data-user-id", id);
   userDom.setAttribute("data-socket-id", sockId);
+
+  // create an image that is insed player.role.image
+  if (player.role) {
+    const img = document.createElement("img");
+    img.setAttribute("src", player.role.image);
+    img.setAttribute("alt", player.role.name);
+    img.setAttribute("class", "w-16 h-16 rounded-full");
+    userDom.appendChild(img);
+  }
   return userDom;
 }
 
@@ -114,6 +130,25 @@ function appendUser(userDom) {
   const usersContainer = document.querySelector("#users");
   usersContainer.appendChild(userDom);
 }
+
+function createRoomTimer() {
+  const timerDiv = document.querySelector("#timer");
+  // ROOM have the property actualTurnStartedAt,
+  // so we can calculate the time left
+  // the time is 30s
+  // transform the time to seconds
+  // transform the ROOM.actualTurnStartedAt to date
+  console.log(ROOM.actualTurnStartedAt);
+  const actualTurnStartedAt = new Date(ROOM.actualTurnStartedAt);
+  const now = new Date();
+  const timeLeft = 30 - Math.floor((now - actualTurnStartedAt) / 1000);
+
+  timerDiv.innerText = timeLeft < 0 ? 30 : timeLeft;
+}
+
+socket.on(SocketOnEvents.CHAT_ALERT, ({ message }) => {
+  appendOnChat(message, "bg-red-400");
+});
 
 let timeStart = Date.now();
 let timeEnd = Date.now();
@@ -128,7 +163,6 @@ socket.on(SocketOnEvents.PONG, () => {
   pingElement = document.querySelector("#ping");
   if (pingElement) {
     pingElement.innerText = ping + "ms";
-    return;
   } else {
     const pingElement = document.createElement("div");
     pingElement.setAttribute("id", "ping");
@@ -136,6 +170,8 @@ socket.on(SocketOnEvents.PONG, () => {
     pingElement.innerText = ping + "ms";
     document.body.appendChild(pingElement);
   }
+
+  createRoomTimer();
 });
 
 setInterval(() => {
