@@ -27,6 +27,7 @@ const STYLES = {
   ping: "absolute top-2 right-2 bg-green-400 rounded p-2 mb-2 z-50 text-xs",
 };
 
+let SKILL = false;
 let PLAYERS = [];
 let ROOM = {};
 
@@ -141,13 +142,19 @@ function appendOnChat(message, background = null, night = false) {
 }
 
 function clickedOn(sockId) {
-  alert("clicked on " + sockId);
+  if (SKILL) {
+    handleSkill(sockId);
+  } else {
+    if (ROOM.turn === "NIGHT" || ROOM.turn === "VOTE") {
+      vote(sockId);
+    }
+  }
 }
 
 function createPlayerDom(name, id, sockId, player) {
   return `
     <div class="${STYLES.userCard}" data-user-id="${id}" onclick="${
-    sockId ? `clickedOn('${sockId}')` : "() => {}"
+    sockId && sockId !== socket.id ? `clickedOn('${sockId}')` : "() => {}"
   }">
       ${name}
       ${
@@ -155,6 +162,7 @@ function createPlayerDom(name, id, sockId, player) {
           ? `<img src="${player.role.image}" alt="${player.role.name}" class="w-16 h-16 rounded-full">`
           : ""
       }
+      vivo: ${player.alive}
     </div>
   `;
 }
@@ -166,12 +174,6 @@ function appendUser(userDom) {
 
 function createRoomTimer() {
   const timerDiv = document.querySelector("#timer");
-  // ROOM have the property actualTurnStartedAt,
-  // so we can calculate the time left
-  // the time is 30s
-  // transform the time to seconds
-  // transform the ROOM.actualTurnStartedAt to date
-  console.log(ROOM.actualTurnStartedAt);
   const actualTurnStartedAt = new Date(ROOM.actualTurnStartedAt);
   const now = new Date();
   const timeLeft = 30 - Math.floor((now - actualTurnStartedAt) / 1000);
@@ -180,7 +182,7 @@ function createRoomTimer() {
 }
 
 socket.on(SocketOnEvents.CHAT_ALERT, ({ message }) => {
-  appendOnChat(message, "bg-red-400");
+  appendOnChat(message, "bg-red-400", ROOM.turn === "NIGHT" ? true : false);
 });
 
 let timeStart = Date.now();
