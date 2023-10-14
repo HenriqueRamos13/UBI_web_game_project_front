@@ -10,8 +10,6 @@ async function register(e) {
     password: form.password.value,
   };
 
-  console.log(1111111, body);
-
   try {
     const response = await fetch(`${API_URL}/signup`, {
       method: "POST",

@@ -44,6 +44,7 @@ socket.on(SocketOnEvents.CONNECT, () => {
 
 socket.on(SocketOnEvents.DISCONNECT, () => {
   console.log("disconnected");
+  window.location.href = "/dashboard.html";
 });
 
 socket.on(SocketOnEvents.ROOM, (room) => {
@@ -54,6 +55,17 @@ socket.on(SocketOnEvents.ROOM, (room) => {
   ROOM = room;
   const roomDiv = document.querySelector("#room");
   roomDiv.innerText = turn + " - " + turnNumber + " - " + startedAt;
+  if (ROOM.turn === "NIGHT") {
+    const chat = document.querySelector("#chat");
+    const chatNight = document.querySelector("#chat-night");
+    chat.classList.add("hidden");
+    chatNight.classList.remove("hidden");
+  } else {
+    const chat = document.querySelector("#chat");
+    const chatNight = document.querySelector("#chat-night");
+    chat.classList.remove("hidden");
+    chatNight.classList.add("hidden");
+  }
 });
 
 socket.on(SocketOnEvents.PLAYERS, (data) => {
@@ -83,11 +95,31 @@ socket.on(SocketOnEvents.CHAT, ({ message, sockId, sender }) => {
   }
 });
 
+socket.on(SocketOnEvents.CHAT_NIGHT, ({ message, sockId, sender }) => {
+  if (sockId === socket.id) {
+    appendOnChat(`You: ${message}`, null, true);
+  } else {
+    appendOnChat(`${sender}: ${message}`, null, true);
+  }
+});
+
+socket.on(SocketOnEvents.CHAT_TO, (message) => {
+  appendOnChat(`${sender}: ${message}`, "bg-blue-300");
+});
+
 const chatForm = document.getElementById("chat-form");
 chatForm.onsubmit = (e) => {
   e.preventDefault();
   sendMessage();
 };
+
+function vote(sockId) {
+  socket.emit(SocketEmitEvents.VOTE, { target: sockId });
+}
+
+function handleSkill(sockId) {
+  socket.emit(SocketEmitEvents.VOTE, { target: sockId });
+}
 
 function sendMessage() {
   const msg = document.querySelector("#message");
@@ -97,38 +129,39 @@ function sendMessage() {
   msg.value = "";
 }
 
-function appendOnChat(message, background = null) {
-  const chat = document.querySelector("#chat");
+function appendOnChat(message, background = null, night = false) {
+  const chat = document.querySelector(`${"#chat"}${night ? "-night" : ""}`);
   const msg = document.createElement("div");
   msg.setAttribute(
     "class",
     background ? background + " " + STYLES.messageChat : STYLES.messageChat
   );
-  msg.innerText = message;
+  msg.textContent = message;
   chat.appendChild(msg);
 }
 
-function createPlayerDom(name, id, sockId, player) {
-  const userDom = document.createElement("div");
-  userDom.setAttribute("class", STYLES.userCard);
-  userDom.innerText = name;
-  userDom.setAttribute("data-user-id", id);
-  userDom.setAttribute("data-socket-id", sockId);
+function clickedOn(sockId) {
+  alert("clicked on " + sockId);
+}
 
-  // create an image that is insed player.role.image
-  if (player.role) {
-    const img = document.createElement("img");
-    img.setAttribute("src", player.role.image);
-    img.setAttribute("alt", player.role.name);
-    img.setAttribute("class", "w-16 h-16 rounded-full");
-    userDom.appendChild(img);
-  }
-  return userDom;
+function createPlayerDom(name, id, sockId, player) {
+  return `
+    <div class="${STYLES.userCard}" data-user-id="${id}" onclick="${
+    sockId ? `clickedOn('${sockId}')` : "() => {}"
+  }">
+      ${name}
+      ${
+        player.role
+          ? `<img src="${player.role.image}" alt="${player.role.name}" class="w-16 h-16 rounded-full">`
+          : ""
+      }
+    </div>
+  `;
 }
 
 function appendUser(userDom) {
   const usersContainer = document.querySelector("#users");
-  usersContainer.appendChild(userDom);
+  usersContainer.innerHTML += userDom;
 }
 
 function createRoomTimer() {
