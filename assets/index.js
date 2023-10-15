@@ -54,6 +54,7 @@ socket.on(SocketOnEvents.ROOM, (room) => {
   }
   const { turn, turnNumber, startedAt } = room;
   ROOM = room;
+  if (ROOM.finished) return finishGame();
   const roomDiv = document.querySelector("#room");
   roomDiv.innerText = turn + " - " + turnNumber + " - " + startedAt;
   if (ROOM.turn === "NIGHT") {
@@ -113,6 +114,15 @@ chatForm.onsubmit = (e) => {
   e.preventDefault();
   sendMessage();
 };
+
+function finishGame() {
+  const chat = document.querySelector("#chat");
+  const chatNight = document.querySelector("#chat-night");
+  chat.classList.add("hidden");
+  chatNight.classList.add("hidden");
+  const room = document.querySelector("#room");
+  room.innerText = `Game finished - Time ${ROOM.winner} ganhou!`;
+}
 
 function vote(sockId) {
   socket.emit(SocketEmitEvents.VOTE, { target: sockId });
