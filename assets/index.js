@@ -21,9 +21,7 @@ const SocketOnEvents = {
 };
 
 const STYLES = {
-  messageChat: "bg-gray-200 rounded p-2 mb-2",
-  userCard:
-    "min-w-[70px] w-[24%] h-[120px] bg-gray-200 rounded p-2 mb-2 flex flex-col justify-center items-center",
+  messageChat: " rounded p-2 mb-2",
   ping: "absolute top-2 right-2 bg-green-400 rounded p-2 mb-2 z-50 text-xs",
 };
 
@@ -145,7 +143,7 @@ function appendOnChat(message, background = null, night = false) {
     background ? background + " " + STYLES.messageChat : STYLES.messageChat
   );
   msg.textContent = message;
-  chat.appendChild(msg);
+  chat.insertBefore(msg, chat.firstChild);
 }
 
 function clickedOn(sockId) {
@@ -313,7 +311,10 @@ class Player {
       mouseY > 0 &&
       mouseY < HEIGHT
     ) {
-      clickedOn(this.data.socketId);
+      if (this.data.socketId === socket.id || ROOM.turn === "LOBBY") {
+        return;
+      }
+      this.data.socketId && clickedOn(this.data.socketId);
     }
   }
 }
