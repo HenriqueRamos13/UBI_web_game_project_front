@@ -19,20 +19,36 @@
     <script src="./assets/consts.js"></script>
   </head>
   <body>
-    <div id="room"></div>
-    <div id="timer"></div>
+    <div class="w-full flex flex-col">
+      <div class="w-full flex flex-row items-center justify-between flex-wrap">
+        <div class="w-[50%] h-[50vh]">
+          <div id="canvas" class="w-full h-full"></div>
+        </div>
+        <div class="w-[50%]">
+          <div id="room"></div>
+        </div>
+      </div>
+      <div class="w-full flex flex-row items-center justify-between flex-wrap">
+        <div class="w-[50%]">
+          <div id="timer"></div>
+        </div>
+        <div class="w-[50%] rounded-sm border border-gray-700">
+          <div id="chat"></div>
+          <div id="chat-night"></div>
+          <form id="chat-form">
+            <input
+              type="text"
+              id="message"
+              name="message"
+              placeholder="Write here..."
+            />
+            <input id="sendMessage" type="submit" value="Send" />
+          </form>
+        </div>
+      </div>
+    </div>
+
     <div id="users" class="w-full flex flex-row flex-wrap gap-2"></div>
-    <div id="chat"></div>
-    <div id="chat-night"></div>
-    <form id="chat-form">
-      <input
-        type="text"
-        id="message"
-        name="message"
-        placeholder="Write here..."
-      />
-      <input id="sendMessage" type="submit" value="Send" />
-    </form>
   </body>
   <script src="./assets/index.js"></script>
 </html>

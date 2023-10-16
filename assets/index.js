@@ -224,11 +224,51 @@ setInterval(() => {
   socket.emit(SocketEmitEvents.PING, "ping");
 }, 1000);
 
-// function setup() {
-//     createCanvas(400, 400);
-// }
+class Utils {
+  // Calculate the Width in pixels of a Dom element
+  static elementWidth(element) {
+    return (
+      element.clientWidth -
+      parseFloat(
+        window.getComputedStyle(element, null).getPropertyValue("padding-left")
+      ) -
+      parseFloat(
+        window.getComputedStyle(element, null).getPropertyValue("padding-right")
+      )
+    );
+  }
 
-// function draw() {
-//     background(220);
-//     ellipse(50,50,80,80);
-// }
+  // Calculate the Height in pixels of a Dom element
+  static elementHeight(element) {
+    return (
+      element.clientHeight -
+      parseFloat(
+        window.getComputedStyle(element, null).getPropertyValue("padding-top")
+      ) -
+      parseFloat(
+        window
+          .getComputedStyle(element, null)
+          .getPropertyValue("padding-bottom")
+      )
+    );
+  }
+}
+
+function setup() {
+  p5Div = document.getElementById("canvas");
+  const p5Canvas = createCanvas(
+    Utils.elementWidth(p5Div),
+    Utils.elementHeight(p5Div)
+  );
+  p5Canvas.parent(p5Div);
+}
+
+function draw() {
+  background(220);
+  ellipse(50, 50, 80, 80);
+}
+
+function windowResized() {
+  p5Div = document.getElementById("canvas");
+  resizeCanvas(Utils.elementWidth(p5Div), Utils.elementHeight(p5Div));
+}
