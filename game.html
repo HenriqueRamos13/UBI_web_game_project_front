@@ -18,37 +18,140 @@
     ></script>
     <script src="./assets/consts.js"></script>
   </head>
-  <body>
+  <body class="bg-gray-800">
     <div class="w-full flex flex-col">
       <div class="w-full flex flex-row items-center justify-between flex-wrap">
-        <div class="w-[50%] h-[50vh]">
+        <div class="w-full md:w-[50%] h-[50vh]">
           <div id="canvas" class="w-full h-full"></div>
         </div>
-        <div class="w-[50%]">
-          <div id="room"></div>
+        <div class="w-full md:w-[50%] p-8">
+          <div class="w-full flex items-center justify-center">
+            <div id="timer" class="text-white text-2xl"></div>
+            <div id="room"></div>
+          </div>
+          <div
+            class="w-full grid grid-cols-4 gap-8 rounded-sm p-8 bg-gray-900 rounded-lg"
+          >
+            <div class="w-full flex items-center justify-center flex-col">
+              <img
+                class="inline-block h-14 w-14 rounded-full"
+                src="https://i.imgur.com/BOqnBkH.png"
+                alt=""
+              />
+              <p class="text-white">Nome role Aqui</p>
+            </div>
+            <div class="w-full flex items-center justify-center flex-col">
+              <img
+                class="inline-block h-14 w-14 rounded-full"
+                src="https://i.imgur.com/S7tGjnq.png"
+                alt=""
+              />
+              <p class="text-white">Nome role Aqui</p>
+            </div>
+            <div class="w-full flex items-center justify-center flex-col">
+              <img
+                class="inline-block h-14 w-14 rounded-full grayscale"
+                src="https://i.imgur.com/jzCEs7Q.png"
+                alt=""
+              />
+              <p class="text-white">Nome role Aqui</p>
+            </div>
+            <div class="w-full flex items-center justify-center flex-col">
+              <img
+                class="inline-block h-14 w-14 rounded-full grayscale"
+                src="https://i.imgur.com/2ZNF2fj.png"
+                alt=""
+              />
+              <p class="text-white">Nome role Aqui</p>
+            </div>
+            <div class="w-full flex items-center justify-center flex-col">
+              <img
+                class="inline-block h-14 w-14 rounded-full grayscale"
+                src="https://i.imgur.com/Sa07SAA.png"
+                alt=""
+              />
+              <p class="text-white">Nome role Aqui</p>
+            </div>
+            <div class="w-full flex items-center justify-center flex-col">
+              <img
+                class="inline-block h-14 w-14 rounded-full"
+                src="https://i.imgur.com/O2WFyu4.png"
+                alt=""
+              />
+              <p class="text-white">Nome role Aqui</p>
+            </div>
+            <div class="w-full flex items-center justify-center flex-col">
+              <img
+                class="inline-block h-14 w-14 rounded-full"
+                src="https://i.imgur.com/BOqnBkH.png"
+                alt=""
+              />
+              <p class="text-white">Nome role Aqui</p>
+            </div>
+            <div class="w-full flex items-center justify-center flex-col">
+              <img
+                class="inline-block h-14 w-14 rounded-full"
+                src="https://i.imgur.com/S7tGjnq.png"
+                alt=""
+              />
+              <p class="text-white">Nome role Aqui</p>
+            </div>
+          </div>
         </div>
       </div>
       <div class="w-full flex flex-row items-center justify-between flex-wrap">
-        <div class="w-[50%]">
-          <div id="timer"></div>
+        <div class="w-full md:w-[50%] p-8">
+          <div
+            class="flex flex-row items-center justify-around w-full bg-gray-900"
+          >
+            <div class="w-full flex items-center justify-center flex-col">
+              <img
+                class="inline-block h-14 w-14 rounded-full"
+                src="https://i.imgur.com/BOqnBkH.png"
+                alt=""
+              />
+              <p class="text-white">Poder 1</p>
+            </div>
+            <div class="w-full flex items-center justify-center flex-col">
+              <img
+                class="inline-block h-14 w-14 rounded-full"
+                src="https://i.imgur.com/S7tGjnq.png"
+                alt=""
+              />
+              <p class="text-white">Poder 2</p>
+            </div>
+          </div>
         </div>
-        <div class="w-[50%] rounded-sm border border-gray-700">
-          <div id="chat"></div>
-          <div id="chat-night"></div>
-          <form id="chat-form">
-            <input
-              type="text"
-              id="message"
-              name="message"
-              placeholder="Write here..."
-            />
-            <input id="sendMessage" type="submit" value="Send" />
-          </form>
+        <div class="w-full md:w-[50%] rounded-sm p-8">
+          <div
+            class="w-full min-h-[30vh] rounded-sm bg-gray-900 rounded-lg relative"
+          >
+            <div id="chat" class="w-full p-2 text-white"></div>
+            <div id="chat-night" class="w-full p-2 text-white"></div>
+            <form
+              id="chat-form"
+              class="flex flex-row items-center gap-2 p-4 absolute left-0 bottom-0 w-full"
+            >
+              <input
+                type="text"
+                id="message"
+                name="message"
+                placeholder="Write here..."
+                class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 p-2 bg-gray-700 text-white"
+              />
+              <input
+                id="sendMessage"
+                type="submit"
+                value="Send"
+                class="rounded-md bg-white/10 px-2.5 py-1.5 text-sm font-semibold text-white shadow-sm hover:bg-white/20"
+              />
+            </form>
+          </div>
         </div>
       </div>
     </div>
 
-    <div id="users" class="w-full flex flex-row flex-wrap gap-2"></div>
+    <!-- <div id="users" class="w-full flex flex-row flex-wrap gap-2"></div> -->
   </body>
   <script src="./assets/index.js"></script>
 </html>

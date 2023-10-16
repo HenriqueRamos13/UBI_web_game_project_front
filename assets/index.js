@@ -30,6 +30,10 @@ const STYLES = {
 let SKILL = false;
 let PLAYERS = [];
 let ROOM = {};
+let images = {
+  man: null,
+  woman: null,
+};
 
 const socket = io("http://localhost:3001/", {
   auth: {
@@ -74,18 +78,11 @@ socket.on(SocketOnEvents.PLAYERS, (data) => {
   if (!data) {
     return;
   }
-  PLAYERS = data;
 
-  const playersContainer = document.querySelector("#users");
-  playersContainer.innerHTML = "";
-  PLAYERS.forEach((player) => {
-    const playerDom = createPlayerDom(
-      player.profile.name,
-      player.id,
-      player.socketId,
-      player
-    );
-    appendUser(playerDom);
+  PLAYERS = [];
+
+  PLAYERS = data.map((player) => {
+    return new Player({ date: Date.now(), ...player });
   });
 });
 
@@ -152,6 +149,7 @@ function appendOnChat(message, background = null, night = false) {
 }
 
 function clickedOn(sockId) {
+  alert("clickedOn " + sockId);
   if (SKILL) {
     handleSkill(sockId);
   } else {
@@ -225,7 +223,6 @@ setInterval(() => {
 }, 1000);
 
 class Utils {
-  // Calculate the Width in pixels of a Dom element
   static elementWidth(element) {
     return (
       element.clientWidth -
@@ -238,7 +235,6 @@ class Utils {
     );
   }
 
-  // Calculate the Height in pixels of a Dom element
   static elementHeight(element) {
     return (
       element.clientHeight -
@@ -254,6 +250,74 @@ class Utils {
   }
 }
 
+p5DivClone = document.getElementById("canvas");
+let WIDTH = Utils.elementWidth(p5DivClone) / 4;
+let HEIGHT = Utils.elementHeight(p5DivClone) / 4;
+let loadedImages = {};
+
+class Player {
+  constructor(data) {
+    this.data = data;
+  }
+
+  display() {
+    push();
+    let multiplier = 0;
+    if (this.data.index <= 4) {
+      multiplier = 0;
+    } else if (this.data.index <= 8) {
+      multiplier = 1;
+    } else if (this.data.index <= 12) {
+      multiplier = 2;
+    } else {
+      multiplier = 3;
+    }
+    rect(WIDTH * (this.data.index - 1), HEIGHT * multiplier, WIDTH, HEIGHT);
+    fill(255);
+    image(
+      images.man,
+      WIDTH * (this.data.index - 1),
+      HEIGHT * multiplier,
+      WIDTH,
+      HEIGHT
+    );
+
+    // if (this.data.role.image || loadedImages[this.data.id]) {
+    //   if (loadedImages[this.data.id]) {
+    //     image(
+    //       loadedImages[this.data.id],
+    //       smallImageX,
+    //       smallImageY,
+    //       smallImageSize,
+    //       smallImageSize
+    //     );
+    //   } else {
+    //     let smallImageSize = 50; // Tamanho da imagem pequena
+    //     let smallImageX = WIDTH * (this.data.index - 1) - smallImageSize;
+    //     let smallImageY = HEIGHT - smallImageSize;
+
+    //     loadImage(this.data.role.image, (img) => {
+    //       loadedImages[this.data.id] = img;
+    //       image(img, smallImageX, smallImageY, smallImageSize, smallImageSize);
+    //     });
+    //   }
+    // }
+    pop();
+  }
+
+  clicked(mouseX, mouseY) {
+    // Verifica se o mouse está dentro do retângulo
+    if (
+      mouseX > WIDTH * (this.data.index - 1) &&
+      mouseX < WIDTH * (this.data.index - 1) + WIDTH &&
+      mouseY > 0 &&
+      mouseY < HEIGHT
+    ) {
+      clickedOn(this.data.socketId);
+    }
+  }
+}
+
 function setup() {
   p5Div = document.getElementById("canvas");
   const p5Canvas = createCanvas(
@@ -261,14 +325,25 @@ function setup() {
     Utils.elementHeight(p5Div)
   );
   p5Canvas.parent(p5Div);
+  loadImage("assets/bg.png", (img) => (images.man = img));
+  loadImage("assets/bg.png", (img) => (images.woman = img));
 }
 
 function draw() {
-  background(220);
-  ellipse(50, 50, 80, 80);
+  background(28, 36, 48);
+
+  PLAYERS.length > 0 && PLAYERS.forEach((player) => player.display());
+}
+
+function mouseClicked() {
+  PLAYERS.length > 0 &&
+    PLAYERS.forEach((player) => player.clicked(mouseX, mouseY));
 }
 
 function windowResized() {
   p5Div = document.getElementById("canvas");
   resizeCanvas(Utils.elementWidth(p5Div), Utils.elementHeight(p5Div));
+
+  WIDTH = Utils.elementWidth(p5Div) / 4;
+  HEIGHT = Utils.elementHeight(p5Div) / 4;
 }
