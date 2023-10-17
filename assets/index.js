@@ -82,7 +82,43 @@ socket.on(SocketOnEvents.PLAYERS, (data) => {
   PLAYERS = data.map((player) => {
     return new Player({ date: Date.now(), ...player });
   });
+
+  const powersDiv = document.querySelector("#powers");
+  const selfPlayer = PLAYERS.find(
+    (player) => player.data.socketId === socket.id
+  );
+
+  if (ROOM.turn === "LOBBY") return;
+
+  if (selfPlayer.data.role === "Combat Medic") {
+    powersDiv.innerHTML = `
+    <div class="w-full flex items-center justify-center flex-col" onclick="clickPower()">
+      <img
+        class="inline-block h-14 w-14 rounded-full"
+        src="${selfPlayer.data.role.image}"
+        alt=""
+      />
+      <p class="text-white">Poder 2</p>
+    </div>
+    `;
+  } else {
+    powersDiv.innerHTML = `
+    <div class="w-full flex items-center justify-center flex-col" onclick="clickPower()">
+      <img
+        class="inline-block h-14 w-14 rounded-full"
+        src="${selfPlayer.data.role.image}"
+        alt=""
+      />
+      <p class="text-white">Outro</p>
+    </div>
+    `;
+  }
 });
+
+function clickPower() {
+  console.log(111111);
+  SKILL = true;
+}
 
 socket.on(SocketOnEvents.CHAT, ({ message, sockId, sender }) => {
   if (sockId === socket.id) {
@@ -124,7 +160,7 @@ function vote(sockId) {
 }
 
 function handleSkill(sockId) {
-  socket.emit(SocketEmitEvents.VOTE, { target: sockId });
+  socket.emit(SocketEmitEvents.HANDLE_SKILL, { target: sockId });
 }
 
 function sendMessage() {
@@ -147,9 +183,10 @@ function appendOnChat(message, background = null, night = false) {
 }
 
 function clickedOn(sockId) {
-  alert("clickedOn " + sockId);
+  console.log(SKILL);
   if (SKILL) {
     handleSkill(sockId);
+    SKILL = false;
   } else {
     if (ROOM.turn === "NIGHT" || ROOM.turn === "VOTE") {
       vote(sockId);
