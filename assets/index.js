@@ -101,7 +101,216 @@ socket.on(SocketOnEvents.PLAYERS, (data) => {
       <p class="text-white">Poder 2</p>
     </div>
     `;
-  } else {
+  } else if(selfPlayer.data.role === "Cyber Brute"){
+    powersDiv.innerHTML = `
+    <div class="w-full flex items-center justify-center flex-col" onclick="clickPower()">
+      <img
+        class="inline-block h-14 w-14 rounded-full"
+        src="${selfPlayer.data.role.image}"
+        alt=""
+      />
+      <p class="text-white">Outro</p>
+    </div>
+    `;
+  } else if(selfPlayer.data.role === "Detective"){
+    powersDiv.innerHTML = `
+    <div class="w-full flex items-center justify-center flex-col" onclick="clickPower()">
+      <img
+        class="inline-block h-14 w-14 rounded-full"
+        src="${selfPlayer.data.role.image}"
+        alt=""
+      />
+      <p class="text-white">Outro</p>
+    </div>
+    `;
+  }else if(selfPlayer.data.role === "Tech Contrabandist"){
+    powersDiv.innerHTML = `
+    <div class="w-full flex items-center justify-center flex-col" onclick="clickPower()">
+      <img
+        class="inline-block h-14 w-14 rounded-full"
+        src="${selfPlayer.data.role.image}"
+        alt=""
+      />
+      <p class="text-white">Outro</p>
+    </div>
+    `;
+  }else if(selfPlayer.data.role === "Cyber Analyst"){
+    powersDiv.innerHTML = `
+    <div class="w-full flex items-center justify-center flex-col" onclick="clickPower()">
+      <img
+        class="inline-block h-14 w-14 rounded-full"
+        src="${selfPlayer.data.role.image}"
+        alt=""
+      />
+      <p class="text-white">Outro</p>
+    </div>
+    `;
+  } else if(selfPlayer.data.role === "Interrogator"){
+    powersDiv.innerHTML = `
+    <div class="w-full flex items-center justify-center flex-col" onclick="clickPower()">
+      <img
+        class="inline-block h-14 w-14 rounded-full"
+        src="${selfPlayer.data.role.image}"
+        alt=""
+      />
+      <p class="text-white">Outro</p>
+    </div>
+    `;
+  } else if(selfPlayer.data.role === "Malware Developer"){
+    powersDiv.innerHTML = `
+    <div class="w-full flex items-center justify-center flex-col" onclick="clickPower()">
+      <img
+        class="inline-block h-14 w-14 rounded-full"
+        src="${selfPlayer.data.role.image}"
+        alt=""
+      />
+      <p class="text-white">Outro</p>
+    </div>
+    `;
+  } else if(selfPlayer.data.role === "Rebel Leader"){
+    powersDiv.innerHTML = `
+    <div class="w-full flex items-center justify-center flex-col" onclick="clickPower()">
+      <img
+        class="inline-block h-14 w-14 rounded-full"
+        src="${selfPlayer.data.role.image}"
+        alt=""
+      />
+      <p class="text-white">Outro</p>
+    </div>
+    `;
+  } else if(selfPlayer.data.role === "Data Collector"){
+    powersDiv.innerHTML = `
+    <div class="w-full flex items-center justify-center flex-col" onclick="clickPower()">
+      <img
+        class="inline-block h-14 w-14 rounded-full"
+        src="${selfPlayer.data.role.image}"
+        alt=""
+      />
+      <p class="text-white">Outro</p>
+    </div>
+    `;
+  } else if(selfPlayer.data.role === "Drug Dealer"){
+    powersDiv.innerHTML = `
+    <div class="w-full flex items-center justify-center flex-col" onclick="clickPower()">
+      <img
+        class="inline-block h-14 w-14 rounded-full"
+        src="${selfPlayer.data.role.image}"
+        alt=""
+      />
+      <p class="text-white">Outro</p>
+    </div>
+    `;
+  } else if(selfPlayer.data.role === "Vigilante Robot"){
+    powersDiv.innerHTML = `
+    <div class="w-full flex items-center justify-center flex-col" onclick="clickPower()">
+      <img
+        class="inline-block h-14 w-14 rounded-full"
+        src="${selfPlayer.data.role.image}"
+        alt=""
+      />
+      <p class="text-white">Outro</p>
+    </div>
+    `;
+  } else if(selfPlayer.data.role === "Hardware Specialist"){
+    powersDiv.innerHTML = `
+    <div class="w-full flex items-center justify-center flex-col" onclick="clickPower()">
+      <img
+        class="inline-block h-14 w-14 rounded-full"
+        src="${selfPlayer.data.role.image}"
+        alt=""
+      />
+      <p class="text-white">Outro</p>
+    </div>
+    `;
+  } else if(selfPlayer.data.role === "Ethical Hacker"){
+    powersDiv.innerHTML = `
+    <div class="w-full flex items-center justify-center flex-col" onclick="clickPower()">
+      <img
+        class="inline-block h-14 w-14 rounded-full"
+        src="${selfPlayer.data.role.image}"
+        alt=""
+      />
+      <p class="text-white">Outro</p>
+    </div>
+    `;
+  } else if(selfPlayer.data.role === "Nanotech Engineer"){
+    powersDiv.innerHTML = `
+    <div class="w-full flex items-center justify-center flex-col" onclick="clickPower()">
+      <img
+        class="inline-block h-14 w-14 rounded-full"
+        src="${selfPlayer.data.role.image}"
+        alt=""
+      />
+      <p class="text-white">Outro</p>
+    </div>
+    `; 
+  } else if(selfPlayer.data.role === "Intelligence Chief"){
+    powersDiv.innerHTML = `
+    <div class="w-full flex items-center justify-center flex-col" onclick="clickPower()">
+      <img
+        class="inline-block h-14 w-14 rounded-full"
+        src="${selfPlayer.data.role.image}"
+        alt=""
+      />
+      <p class="text-white">Outro</p>
+    </div>
+    `;
+  } else if(selfPlayer.data.role === "Instigator"){
+    powersDiv.innerHTML = `
+    <div class="w-full flex items-center justify-center flex-col" onclick="clickPower()">
+      <img
+        class="inline-block h-14 w-14 rounded-full"
+        src="${selfPlayer.data.role.image}"
+        alt=""
+      />
+      <p class="text-white">Outro</p>
+    </div>
+    `;
+  } else if(selfPlayer.data.role === "Cybersecurity Specialist"){
+    powersDiv.innerHTML = `
+    <div class="w-full flex items-center justify-center flex-col" onclick="clickPower()">
+      <img
+        class="inline-block h-14 w-14 rounded-full"
+        src="${selfPlayer.data.role.image}"
+        alt=""
+      />
+      <p class="text-white">Outro</p>
+    </div>
+    `;
+  } else if(selfPlayer.data.role === "Blackhat Hacker"){
+    powersDiv.innerHTML = `
+    <div class="w-full flex items-center justify-center flex-col" onclick="clickPower()">
+      <img
+        class="inline-block h-14 w-14 rounded-full"
+        src="${selfPlayer.data.role.image}"
+        alt=""
+      />
+      <p class="text-white">Outro</p>
+    </div>
+    `;
+  } else if(selfPlayer.data.role === "Disruptor"){
+    powersDiv.innerHTML = `
+    <div class="w-full flex items-center justify-center flex-col" onclick="clickPower()">
+      <img
+        class="inline-block h-14 w-14 rounded-full"
+        src="${selfPlayer.data.role.image}"
+        alt=""
+      />
+      <p class="text-white">Outro</p>
+    </div>
+    `;
+  } else if(selfPlayer.data.role === "Serial Killer"){
+    powersDiv.innerHTML = `
+    <div class="w-full flex items-center justify-center flex-col" onclick="clickPower()">
+      <img
+        class="inline-block h-14 w-14 rounded-full"
+        src="${selfPlayer.data.role.image}"
+        alt=""
+      />
+      <p class="text-white">Outro</p>
+    </div>
+    `;
+  } else if(selfPlayer.data.role === "Corruptor"){
     powersDiv.innerHTML = `
     <div class="w-full flex items-center justify-center flex-col" onclick="clickPower()">
       <img
@@ -113,7 +322,9 @@ socket.on(SocketOnEvents.PLAYERS, (data) => {
     </div>
     `;
   }
-});
+
+
+}); 
 
 function clickPower() {
   console.log(111111);
