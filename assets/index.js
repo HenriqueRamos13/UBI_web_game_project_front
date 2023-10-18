@@ -114,112 +114,122 @@ socket.on(SocketOnEvents.PLAYERS, (data) => {
 
   if (selfPlayer.data.role.name === "Combat Medic") {
     powersDiv.innerHTML = `
-    <div class="w-full flex items-center justify-center flex-col" onclick="clickPower()">
+    <div class="w-full flex items-center justify-center flex-col p-8" onclick="clickPower()">
       <img
         class="inline-block h-14 w-14 rounded-full"
         src="${selfPlayer.data.role.image}"
         alt=""
       />
       <p class="text-white">${selfPlayer.data.role.name}</p>
+      <p class="text-center text-white">${selfPlayer.data.role.description}</p>
     </div>
     `;
   } else if (selfPlayer.data.role.name === "Tactical Soldier") {
     powersDiv.innerHTML = `
-    <div class="w-full flex items-center justify-center flex-col" onclick="clickPower()">
+    <div class="w-full flex items-center justify-center flex-col p-8" onclick="clickPower()">
       <img
         class="inline-block h-14 w-14 rounded-full"
         src="${selfPlayer.data.role.image}"
         alt=""
       />
       <p class="text-white">${selfPlayer.data.role.name}</p>
+      <p class="text-center text-white">${selfPlayer.data.role.description}</p>
     </div>
     `;
   } else if (selfPlayer.data.role.name === "Detective") {
     powersDiv.innerHTML = `
-    <div class="w-full flex items-center justify-center flex-col" onclick="clickPower()">
+    <div class="w-full flex items-center justify-center flex-col p-8" onclick="clickPower()">
       <img
         class="inline-block h-14 w-14 rounded-full"
         src="${selfPlayer.data.role.image}"
         alt=""
       />
       <p class="text-white">${selfPlayer.data.role.name}</p>
+      <p class="text-center text-white">${selfPlayer.data.role.description}</p>
     </div>
     `;
   } else if (selfPlayer.data.role.name === "Tech Contrabandist") {
     powersDiv.innerHTML = `
-    <div class="w-full flex items-center justify-center flex-col" onclick="clickPower()">
+    <div class="w-full flex items-center justify-center flex-col p-8" onclick="clickPower()">
       <img
         class="inline-block h-14 w-14 rounded-full"
         src="${selfPlayer.data.role.image}"
         alt=""
       />
       <p class="text-white">${selfPlayer.data.role.name}</p>
+      <p class="text-center text-white">${selfPlayer.data.role.description}</p>
     </div>
     `;
   } else if (selfPlayer.data.role.name === "Rebel Leader") {
     powersDiv.innerHTML = `
-    <div class="w-full flex items-center justify-center flex-col" onclick="clickPower()">
+    <div class="w-full flex items-center justify-center flex-col p-8" onclick="clickPower()">
       <img
         class="inline-block h-14 w-14 rounded-full"
         src="${selfPlayer.data.role.image}"
         alt=""
       />
       <p class="text-white">${selfPlayer.data.role.name}</p>
+      <p class="text-center text-white">${selfPlayer.data.role.description}</p>
     </div>
     `;
   } else if (selfPlayer.data.role.name === "Chief of Intelligence") {
     powersDiv.innerHTML = `
-    <div class="w-full flex items-center justify-center flex-col" onclick="clickPower()">
+    <div class="w-full flex items-center justify-center flex-col p-8" onclick="clickPower()">
       <img
         class="inline-block h-14 w-14 rounded-full"
         src="${selfPlayer.data.role.image}"
         alt=""
       />
       <p class="text-white">${selfPlayer.data.role.name}</p>
+      <p class="text-center text-white">${selfPlayer.data.role.description}</p>
     </div>
     `;
   } else if (selfPlayer.data.role.name === "Instigator") {
     powersDiv.innerHTML = `
-    <div class="w-full flex items-center justify-center flex-col" onclick="clickPower()">
+    <div class="w-full flex items-center justify-center flex-col p-8" onclick="clickPower()">
       <img
         class="inline-block h-14 w-14 rounded-full"
         src="${selfPlayer.data.role.image}"
         alt=""
       />
       <p class="text-white">${selfPlayer.data.role.name}</p>
+      <p class="text-center text-white">${selfPlayer.data.role.description}</p>
     </div>
     `;
   } else if (selfPlayer.data.role.name === "Serial Killer") {
     powersDiv.innerHTML = `
-    <div class="w-full flex items-center justify-center flex-col" onclick="clickPower()">
+    <div class="w-full flex items-center justify-center flex-col p-8" onclick="clickPower()">
       <img
         class="inline-block h-14 w-14 rounded-full"
         src="${selfPlayer.data.role.image}"
         alt=""
       />
       <p class="text-white">${selfPlayer.data.role.name}</p>
+      <p class="text-center text-white">${selfPlayer.data.role.description}</p>
     </div>
     `;
   } else if (selfPlayer.data.role.name === "Anarchist") {
     powersDiv.innerHTML = `
-    <div class="w-full flex items-center justify-center flex-col" onclick="clickPower()">
+    <div class="w-full flex items-center justify-center flex-col p-8" onclick="clickPower()">
       <img
         class="inline-block h-14 w-14 rounded-full"
         src="${selfPlayer.data.role.image}"
         alt=""
       />
       <p class="text-white">${selfPlayer.data.role.name}</p>
+      <p class="text-center text-white">${selfPlayer.data.role.description}</p>
     </div>
     `;
   } else if (selfPlayer.data.role.name === "Government Leader") {
     powersDiv.innerHTML = `
-    <div class="w-full flex items-center justify-center flex-col" onclick="clickPower()">
+    <div class="w-full flex items-center justify-center flex-col p-8" onclick="clickPower()">
       <img
         class="inline-block h-14 w-14 rounded-full"
         src="${selfPlayer.data.role.image}"
         alt=""
       />
       <p class="text-white">${selfPlayer.data.role.name}</p>
+      <p class="text-center text-white">${selfPlayer.data.role.description}</p>
     </div>
     `;
   }
@@ -246,7 +256,7 @@ socket.on(SocketOnEvents.CHAT_NIGHT, ({ message, sockId, sender }) => {
 });
 
 socket.on(SocketOnEvents.CHAT_TO, ({ message, sender }) => {
-  appendOnChat(`${sender}: ${message}`, "bg-blue-300");
+  appendOnChat(`${sender}: ${message}`, "bg-blue-800", ROOM.turn === "NIGHT");
 });
 
 const chatForm = document.getElementById("chat-form");
