@@ -33,7 +33,10 @@ let images = {
   woman: null,
 };
 
-const socket = io("http://localhost:3001/", {
+const API_URL_WS = "http://localhost:3001";
+// const API_URL_WS = "https://gameubi.onrender.com";
+
+const socket = io(API_URL_WS, {
   auth: {
     token: localStorage.getItem("token"),
   },
@@ -90,6 +93,23 @@ socket.on(SocketOnEvents.PLAYERS, (data) => {
 
   if (ROOM.turn === "LOBBY") return;
 
+  const rolesDiv = document.querySelector("#roles");
+
+  rolesDiv.innerHTML = "";
+
+  PLAYERS.forEach((player) => {
+    rolesDiv.innerHTML += `
+      <div class="w-full flex items-center justify-center flex-col">
+        <img
+          class="inline-block h-14 w-14 rounded-full"
+          src="${player.data.role.image}"
+          alt=""
+        />
+        <p class="text-white">${player.data.role.name}</p>
+      </div>
+      `;
+  });
+
   if (selfPlayer.data.role === "Combat Medic") {
     powersDiv.innerHTML = `
     <div class="w-full flex items-center justify-center flex-col" onclick="clickPower()">
@@ -136,7 +156,7 @@ socket.on(SocketOnEvents.CHAT_NIGHT, ({ message, sockId, sender }) => {
   }
 });
 
-socket.on(SocketOnEvents.CHAT_TO, (message) => {
+socket.on(SocketOnEvents.CHAT_TO, ({ message, sender }) => {
   appendOnChat(`${sender}: ${message}`, "bg-blue-300");
 });
 
@@ -287,7 +307,7 @@ class Utils {
 
 p5DivClone = document.getElementById("canvas");
 let WIDTH = Utils.elementWidth(p5DivClone) / 4;
-let HEIGHT = Utils.elementHeight(p5DivClone) / 4;
+let HEIGHT = Utils.elementHeight(p5DivClone) / 3;
 let loadedImages = {};
 
 class Player {
@@ -307,15 +327,103 @@ class Player {
     } else {
       multiplier = 3;
     }
-    rect(WIDTH * (this.data.index - 1), HEIGHT * multiplier, WIDTH, HEIGHT);
-    fill(255);
-    image(
-      images.man,
-      WIDTH * (this.data.index - 1),
-      HEIGHT * multiplier,
-      WIDTH,
-      HEIGHT
-    );
+
+    if (this.data.index <= 4) {
+      rect(WIDTH * (this.data.index - 1), HEIGHT * multiplier, WIDTH, HEIGHT);
+      fill(255);
+      if (this.data.alive) {
+        image(
+          images.man,
+          WIDTH * (this.data.index - 1),
+          HEIGHT * multiplier,
+          WIDTH,
+          HEIGHT - 30
+        );
+      }
+
+      textSize(12);
+      fill(0);
+      text(
+        this.data.profile.name,
+        WIDTH * (this.data.index - 1) + WIDTH / 3,
+        HEIGHT * multiplier + HEIGHT - 10
+      );
+    } else if (this.data.index <= 8) {
+      rect(
+        WIDTH * (this.data.index - 1 - 4),
+        HEIGHT * multiplier,
+        WIDTH,
+        HEIGHT
+      );
+      fill(255);
+      if (this.data.alive) {
+        image(
+          images.man,
+          WIDTH * (this.data.index - 1 - 4),
+          HEIGHT * multiplier,
+          WIDTH,
+          HEIGHT - 30
+        );
+      }
+
+      textSize(12);
+      fill(0);
+      text(
+        this.data.profile.name,
+        WIDTH * (this.data.index - 1 - 4) + WIDTH / 3,
+        HEIGHT * multiplier + HEIGHT - 10
+      );
+    } else if (this.data.index <= 12) {
+      rect(
+        WIDTH * (this.data.index - 1 - 8),
+        HEIGHT * multiplier,
+        WIDTH,
+        HEIGHT
+      );
+      fill(255);
+      if (this.data.alive) {
+        image(
+          images.man,
+          WIDTH * (this.data.index - 1 - 8),
+          HEIGHT * multiplier,
+          WIDTH,
+          HEIGHT - 30
+        );
+      }
+
+      textSize(12);
+      fill(0);
+      text(
+        this.data.profile.name,
+        WIDTH * (this.data.index - 1 - 8) + WIDTH / 3,
+        HEIGHT * multiplier + HEIGHT - 10
+      );
+    } else {
+      rect(
+        WIDTH * (this.data.index - 1 - 12),
+        HEIGHT * multiplier,
+        WIDTH,
+        HEIGHT
+      );
+      fill(255);
+      if (this.data.alive) {
+        image(
+          images.man,
+          WIDTH * (this.data.index - 1 - 12),
+          HEIGHT * multiplier,
+          WIDTH,
+          HEIGHT - 30
+        );
+      }
+
+      textSize(12);
+      fill(0);
+      text(
+        this.data.profile.name,
+        WIDTH * (this.data.index - 1 - 12) + WIDTH / 3,
+        HEIGHT * multiplier + HEIGHT - 10
+      );
+    }
 
     // if (this.data.role.image || loadedImages[this.data.id]) {
     //   if (loadedImages[this.data.id]) {
