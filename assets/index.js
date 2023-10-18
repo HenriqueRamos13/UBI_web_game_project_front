@@ -101,7 +101,9 @@ socket.on(SocketOnEvents.PLAYERS, (data) => {
     rolesDiv.innerHTML += `
       <div class="w-full flex items-center justify-center flex-col">
         <img
-          class="inline-block h-14 w-14 rounded-full"
+          class="inline-block h-14 w-14 rounded-full ${
+            player.data.alive ? "" : "grayscale"
+          }"
           src="${player.data.role.image}"
           alt=""
         />
@@ -110,7 +112,7 @@ socket.on(SocketOnEvents.PLAYERS, (data) => {
       `;
   });
 
-  if (selfPlayer.data.role === "Combat Medic") {
+  if (selfPlayer.data.role.name === "Combat Medic") {
     powersDiv.innerHTML = `
     <div class="w-full flex items-center justify-center flex-col" onclick="clickPower()">
       <img
@@ -118,10 +120,10 @@ socket.on(SocketOnEvents.PLAYERS, (data) => {
         src="${selfPlayer.data.role.image}"
         alt=""
       />
-      <p class="text-white">Poder 2</p>
+      <p class="text-white">${selfPlayer.data.role.name}</p>
     </div>
     `;
-  } else if(selfPlayer.data.role === "Cyber Brute"){
+  } else if (selfPlayer.data.role.name === "Tactical Soldier") {
     powersDiv.innerHTML = `
     <div class="w-full flex items-center justify-center flex-col" onclick="clickPower()">
       <img
@@ -129,10 +131,10 @@ socket.on(SocketOnEvents.PLAYERS, (data) => {
         src="${selfPlayer.data.role.image}"
         alt=""
       />
-      <p class="text-white">Outro</p>
+      <p class="text-white">${selfPlayer.data.role.name}</p>
     </div>
     `;
-  } else if(selfPlayer.data.role === "Detective"){
+  } else if (selfPlayer.data.role.name === "Detective") {
     powersDiv.innerHTML = `
     <div class="w-full flex items-center justify-center flex-col" onclick="clickPower()">
       <img
@@ -140,10 +142,10 @@ socket.on(SocketOnEvents.PLAYERS, (data) => {
         src="${selfPlayer.data.role.image}"
         alt=""
       />
-      <p class="text-white">Outro</p>
+      <p class="text-white">${selfPlayer.data.role.name}</p>
     </div>
     `;
-  }else if(selfPlayer.data.role === "Tech Contrabandist"){
+  } else if (selfPlayer.data.role.name === "Tech Contrabandist") {
     powersDiv.innerHTML = `
     <div class="w-full flex items-center justify-center flex-col" onclick="clickPower()">
       <img
@@ -151,10 +153,10 @@ socket.on(SocketOnEvents.PLAYERS, (data) => {
         src="${selfPlayer.data.role.image}"
         alt=""
       />
-      <p class="text-white">Outro</p>
+      <p class="text-white">${selfPlayer.data.role.name}</p>
     </div>
     `;
-  }else if(selfPlayer.data.role === "Cyber Analyst"){
+  } else if (selfPlayer.data.role.name === "Rebel Leader") {
     powersDiv.innerHTML = `
     <div class="w-full flex items-center justify-center flex-col" onclick="clickPower()">
       <img
@@ -162,10 +164,10 @@ socket.on(SocketOnEvents.PLAYERS, (data) => {
         src="${selfPlayer.data.role.image}"
         alt=""
       />
-      <p class="text-white">Outro</p>
+      <p class="text-white">${selfPlayer.data.role.name}</p>
     </div>
     `;
-  } else if(selfPlayer.data.role === "Interrogator"){
+  } else if (selfPlayer.data.role.name === "Chief of Intelligence") {
     powersDiv.innerHTML = `
     <div class="w-full flex items-center justify-center flex-col" onclick="clickPower()">
       <img
@@ -173,10 +175,10 @@ socket.on(SocketOnEvents.PLAYERS, (data) => {
         src="${selfPlayer.data.role.image}"
         alt=""
       />
-      <p class="text-white">Outro</p>
+      <p class="text-white">${selfPlayer.data.role.name}</p>
     </div>
     `;
-  } else if(selfPlayer.data.role === "Malware Developer"){
+  } else if (selfPlayer.data.role.name === "Instigator") {
     powersDiv.innerHTML = `
     <div class="w-full flex items-center justify-center flex-col" onclick="clickPower()">
       <img
@@ -184,10 +186,10 @@ socket.on(SocketOnEvents.PLAYERS, (data) => {
         src="${selfPlayer.data.role.image}"
         alt=""
       />
-      <p class="text-white">Outro</p>
+      <p class="text-white">${selfPlayer.data.role.name}</p>
     </div>
     `;
-  } else if(selfPlayer.data.role === "Rebel Leader"){
+  } else if (selfPlayer.data.role.name === "Serial Killer") {
     powersDiv.innerHTML = `
     <div class="w-full flex items-center justify-center flex-col" onclick="clickPower()">
       <img
@@ -195,10 +197,10 @@ socket.on(SocketOnEvents.PLAYERS, (data) => {
         src="${selfPlayer.data.role.image}"
         alt=""
       />
-      <p class="text-white">Outro</p>
+      <p class="text-white">${selfPlayer.data.role.name}</p>
     </div>
     `;
-  } else if(selfPlayer.data.role === "Data Collector"){
+  } else if (selfPlayer.data.role.name === "Anarchist") {
     powersDiv.innerHTML = `
     <div class="w-full flex items-center justify-center flex-col" onclick="clickPower()">
       <img
@@ -206,10 +208,10 @@ socket.on(SocketOnEvents.PLAYERS, (data) => {
         src="${selfPlayer.data.role.image}"
         alt=""
       />
-      <p class="text-white">Outro</p>
+      <p class="text-white">${selfPlayer.data.role.name}</p>
     </div>
     `;
-  } else if(selfPlayer.data.role === "Drug Dealer"){
+  } else if (selfPlayer.data.role.name === "Government Leader") {
     powersDiv.innerHTML = `
     <div class="w-full flex items-center justify-center flex-col" onclick="clickPower()">
       <img
@@ -217,137 +219,13 @@ socket.on(SocketOnEvents.PLAYERS, (data) => {
         src="${selfPlayer.data.role.image}"
         alt=""
       />
-      <p class="text-white">Outro</p>
-    </div>
-    `;
-  } else if(selfPlayer.data.role === "Vigilante Robot"){
-    powersDiv.innerHTML = `
-    <div class="w-full flex items-center justify-center flex-col" onclick="clickPower()">
-      <img
-        class="inline-block h-14 w-14 rounded-full"
-        src="${selfPlayer.data.role.image}"
-        alt=""
-      />
-      <p class="text-white">Outro</p>
-    </div>
-    `;
-  } else if(selfPlayer.data.role === "Hardware Specialist"){
-    powersDiv.innerHTML = `
-    <div class="w-full flex items-center justify-center flex-col" onclick="clickPower()">
-      <img
-        class="inline-block h-14 w-14 rounded-full"
-        src="${selfPlayer.data.role.image}"
-        alt=""
-      />
-      <p class="text-white">Outro</p>
-    </div>
-    `;
-  } else if(selfPlayer.data.role === "Ethical Hacker"){
-    powersDiv.innerHTML = `
-    <div class="w-full flex items-center justify-center flex-col" onclick="clickPower()">
-      <img
-        class="inline-block h-14 w-14 rounded-full"
-        src="${selfPlayer.data.role.image}"
-        alt=""
-      />
-      <p class="text-white">Outro</p>
-    </div>
-    `;
-  } else if(selfPlayer.data.role === "Nanotech Engineer"){
-    powersDiv.innerHTML = `
-    <div class="w-full flex items-center justify-center flex-col" onclick="clickPower()">
-      <img
-        class="inline-block h-14 w-14 rounded-full"
-        src="${selfPlayer.data.role.image}"
-        alt=""
-      />
-      <p class="text-white">Outro</p>
-    </div>
-    `; 
-  } else if(selfPlayer.data.role === "Intelligence Chief"){
-    powersDiv.innerHTML = `
-    <div class="w-full flex items-center justify-center flex-col" onclick="clickPower()">
-      <img
-        class="inline-block h-14 w-14 rounded-full"
-        src="${selfPlayer.data.role.image}"
-        alt=""
-      />
-      <p class="text-white">Outro</p>
-    </div>
-    `;
-  } else if(selfPlayer.data.role === "Instigator"){
-    powersDiv.innerHTML = `
-    <div class="w-full flex items-center justify-center flex-col" onclick="clickPower()">
-      <img
-        class="inline-block h-14 w-14 rounded-full"
-        src="${selfPlayer.data.role.image}"
-        alt=""
-      />
-      <p class="text-white">Outro</p>
-    </div>
-    `;
-  } else if(selfPlayer.data.role === "Cybersecurity Specialist"){
-    powersDiv.innerHTML = `
-    <div class="w-full flex items-center justify-center flex-col" onclick="clickPower()">
-      <img
-        class="inline-block h-14 w-14 rounded-full"
-        src="${selfPlayer.data.role.image}"
-        alt=""
-      />
-      <p class="text-white">Outro</p>
-    </div>
-    `;
-  } else if(selfPlayer.data.role === "Blackhat Hacker"){
-    powersDiv.innerHTML = `
-    <div class="w-full flex items-center justify-center flex-col" onclick="clickPower()">
-      <img
-        class="inline-block h-14 w-14 rounded-full"
-        src="${selfPlayer.data.role.image}"
-        alt=""
-      />
-      <p class="text-white">Outro</p>
-    </div>
-    `;
-  } else if(selfPlayer.data.role === "Disruptor"){
-    powersDiv.innerHTML = `
-    <div class="w-full flex items-center justify-center flex-col" onclick="clickPower()">
-      <img
-        class="inline-block h-14 w-14 rounded-full"
-        src="${selfPlayer.data.role.image}"
-        alt=""
-      />
-      <p class="text-white">Outro</p>
-    </div>
-    `;
-  } else if(selfPlayer.data.role === "Serial Killer"){
-    powersDiv.innerHTML = `
-    <div class="w-full flex items-center justify-center flex-col" onclick="clickPower()">
-      <img
-        class="inline-block h-14 w-14 rounded-full"
-        src="${selfPlayer.data.role.image}"
-        alt=""
-      />
-      <p class="text-white">Outro</p>
-    </div>
-    `;
-  } else if(selfPlayer.data.role === "Corruptor"){
-    powersDiv.innerHTML = `
-    <div class="w-full flex items-center justify-center flex-col" onclick="clickPower()">
-      <img
-        class="inline-block h-14 w-14 rounded-full"
-        src="${selfPlayer.data.role.image}"
-        alt=""
-      />
-      <p class="text-white">Outro</p>
+      <p class="text-white">${selfPlayer.data.role.name}</p>
     </div>
     `;
   }
-
-
-}); 
+});
 
 function clickPower() {
-  console.log(111111);
   SKILL = true;
 }
 
@@ -414,7 +292,7 @@ function appendOnChat(message, background = null, night = false) {
 }
 
 function clickedOn(sockId) {
-  console.log(SKILL);
+  console.log("turn is " + ROOM + " clickedOn " + sockId);
   if (SKILL) {
     handleSkill(sockId);
     SKILL = false;
@@ -524,6 +402,10 @@ let loadedImages = {};
 class Player {
   constructor(data) {
     this.data = data;
+    this.position = {
+      WIDTH: null,
+      HEIGHT: null,
+    };
   }
 
   display() {
@@ -559,6 +441,11 @@ class Player {
         WIDTH * (this.data.index - 1) + WIDTH / 3,
         HEIGHT * multiplier + HEIGHT - 10
       );
+
+      this.position = {
+        WIDTH: WIDTH * (this.data.index - 1),
+        HEIGHT: HEIGHT * multiplier,
+      };
     } else if (this.data.index <= 8) {
       rect(
         WIDTH * (this.data.index - 1 - 4),
@@ -584,6 +471,11 @@ class Player {
         WIDTH * (this.data.index - 1 - 4) + WIDTH / 3,
         HEIGHT * multiplier + HEIGHT - 10
       );
+
+      this.position = {
+        WIDTH: WIDTH * (this.data.index - 1 - 4),
+        HEIGHT: HEIGHT * multiplier,
+      };
     } else if (this.data.index <= 12) {
       rect(
         WIDTH * (this.data.index - 1 - 8),
@@ -609,6 +501,11 @@ class Player {
         WIDTH * (this.data.index - 1 - 8) + WIDTH / 3,
         HEIGHT * multiplier + HEIGHT - 10
       );
+
+      this.position = {
+        WIDTH: WIDTH * (this.data.index - 1 - 8),
+        HEIGHT: HEIGHT * multiplier,
+      };
     } else {
       rect(
         WIDTH * (this.data.index - 1 - 12),
@@ -634,6 +531,11 @@ class Player {
         WIDTH * (this.data.index - 1 - 12) + WIDTH / 3,
         HEIGHT * multiplier + HEIGHT - 10
       );
+
+      this.position = {
+        WIDTH: WIDTH * (this.data.index - 1 - 12),
+        HEIGHT: HEIGHT * multiplier,
+      };
     }
 
     // if (this.data.role.image || loadedImages[this.data.id]) {
@@ -662,10 +564,10 @@ class Player {
   clicked(mouseX, mouseY) {
     // Verifica se o mouse está dentro do retângulo
     if (
-      mouseX > WIDTH * (this.data.index - 1) &&
-      mouseX < WIDTH * (this.data.index - 1) + WIDTH &&
-      mouseY > 0 &&
-      mouseY < HEIGHT
+      mouseX >= this.position.WIDTH &&
+      mouseX <= this.position.WIDTH + WIDTH &&
+      mouseY >= this.position.HEIGHT &&
+      mouseY <= this.position.HEIGHT + HEIGHT
     ) {
       if (this.data.socketId === socket.id || ROOM.turn === "LOBBY") {
         return;
