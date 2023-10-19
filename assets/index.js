@@ -354,8 +354,6 @@ socket.on(SocketOnEvents.PONG, () => {
   timeEnd = Date.now();
   const ping = timeEnd - timeStart;
 
-  // crate an element to show ping
-
   let pingElement;
   pingElement = document.querySelector("#ping");
   if (pingElement) {
