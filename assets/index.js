@@ -74,7 +74,7 @@ socket.on(SocketOnEvents.ROOM, (room) => {
     chatNight.classList.add("hidden");
   }
 });
-
+           
 socket.on(SocketOnEvents.PLAYERS, (data) => {
   if (!data) {
     return;
@@ -116,11 +116,11 @@ socket.on(SocketOnEvents.PLAYERS, (data) => {
     powersDiv.innerHTML = `
     <div class="w-full flex items-center justify-center flex-col p-8" onclick="clickPower()">
       <img
-        class="inline-block h-14 w-14 rounded-full"
-        src="${selfPlayer.data.role.image}"
+        class="inline-block h-14 w-14"
+        src="https://i.imgur.com/stFaNUI.png"
         alt=""
       />
-      <p class="text-white">${selfPlayer.data.role.name}</p>
+      <p class="text-white">Protect</p>
       <p class="text-center text-white">${selfPlayer.data.role.description}</p>
     </div>
     `;
@@ -144,7 +144,7 @@ socket.on(SocketOnEvents.PLAYERS, (data) => {
         src="${selfPlayer.data.role.image}"
         alt=""
       />
-      <p class="text-white">${selfPlayer.data.role.name}</p>
+      <p class="text-white">Check</p>
       <p class="text-center text-white">${selfPlayer.data.role.description}</p>
     </div>
     `;
@@ -156,7 +156,7 @@ socket.on(SocketOnEvents.PLAYERS, (data) => {
         src="${selfPlayer.data.role.image}"
         alt=""
       />
-      <p class="text-white">${selfPlayer.data.role.name}</p>
+      <p class="text-white">Revive</p>
       <p class="text-center text-white">${selfPlayer.data.role.description}</p>
     </div>
     `;
@@ -168,7 +168,7 @@ socket.on(SocketOnEvents.PLAYERS, (data) => {
         src="${selfPlayer.data.role.image}"
         alt=""
       />
-      <p class="text-white">${selfPlayer.data.role.name}</p>
+      <p class="text-white">Reveal</p>
       <p class="text-center text-white">${selfPlayer.data.role.description}</p>
     </div>
     `;
@@ -180,7 +180,7 @@ socket.on(SocketOnEvents.PLAYERS, (data) => {
         src="${selfPlayer.data.role.image}"
         alt=""
       />
-      <p class="text-white">${selfPlayer.data.role.name}</p>
+      <p class="text-white">Check</p>
       <p class="text-center text-white">${selfPlayer.data.role.description}</p>
     </div>
     `;
@@ -192,7 +192,7 @@ socket.on(SocketOnEvents.PLAYERS, (data) => {
         src="${selfPlayer.data.role.image}"
         alt=""
       />
-      <p class="text-white">${selfPlayer.data.role.name}</p>
+      <p class="text-white">Reveal</p>
       <p class="text-center text-white">${selfPlayer.data.role.description}</p>
     </div>
     `;
@@ -204,7 +204,7 @@ socket.on(SocketOnEvents.PLAYERS, (data) => {
         src="${selfPlayer.data.role.image}"
         alt=""
       />
-      <p class="text-white">${selfPlayer.data.role.name}</p>
+      <p class="text-white">Kill</p>
       <p class="text-center text-white">${selfPlayer.data.role.description}</p>
     </div>
     `;
@@ -405,6 +405,7 @@ class Utils {
 p5DivClone = document.getElementById("canvas");
 let WIDTH = Utils.elementWidth(p5DivClone) / 4;
 let HEIGHT = Utils.elementHeight(p5DivClone) / 3;
+let margin = 5;
 let loadedImages = {};
 
 class Player {
@@ -430,24 +431,33 @@ class Player {
     }
 
     if (this.data.index <= 4) {
-      rect(WIDTH * (this.data.index - 1), HEIGHT * multiplier, WIDTH, HEIGHT);
+      const backgroundX = WIDTH * (this.data.index - 1) + margin * (this.data.index - 1)
+      const imageX = backgroundX+30
+      rect(
+        backgroundX,
+        HEIGHT * multiplier + margin * multiplier,
+        WIDTH,
+        HEIGHT
+      );
       fill(255);
+      image(images.bg,  backgroundX, this.position.HEIGHT, WIDTH, HEIGHT)
       if (this.data.alive) {
         image(
           images.man,
-          WIDTH * (this.data.index - 1),
-          HEIGHT * multiplier,
-          WIDTH,
+          imageX,
+          HEIGHT * multiplier +30,
+          100,
           HEIGHT - 30
         );
       }
-
+      
+      
       textSize(12);
       fill(0);
       text(
         this.data.profile.name,
-        WIDTH * (this.data.index - 1) + WIDTH / 3,
-        HEIGHT * multiplier + HEIGHT - 10
+        WIDTH * (this.data.index - 1) + WIDTH / 2.5,
+        HEIGHT * multiplier + HEIGHT - 95
       );
 
       this.position = {
@@ -592,13 +602,14 @@ function setup() {
     Utils.elementHeight(p5Div)
   );
   p5Canvas.parent(p5Div);
-  loadImage("assets/bg.png", (img) => (images.man = img));
-  loadImage("assets/bg.png", (img) => (images.woman = img));
+  loadImage("assets/images/man.png", (img) => (images.man = img));
+  loadImage("assets/images/woman.png", (img) => (images.woman = img));
+  loadImage("assets/images/bg.png", (img => (images.bg = img)));
 }
 
 function draw() {
-  background(28, 36, 48);
-
+  
+  
   PLAYERS.length > 0 && PLAYERS.forEach((player) => player.display());
 }
 
