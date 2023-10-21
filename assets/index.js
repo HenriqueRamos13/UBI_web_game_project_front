@@ -61,7 +61,8 @@ socket.on(SocketOnEvents.ROOM, (room) => {
   ROOM = room;
   if (ROOM.finished) return finishGame();
   const roomDiv = document.querySelector("#room");
-  roomDiv.innerText = turn + " - " + turnNumber + " - " + startedAt;
+  // roomDiv.innerText = turn + " - " + turnNumber + " - " + startedAt;
+  roomDiv.innerText = turn;
   if (ROOM.turn === "NIGHT") {
     const chat = document.querySelector("#chat");
     const chatNight = document.querySelector("#chat-night");
@@ -74,7 +75,7 @@ socket.on(SocketOnEvents.ROOM, (room) => {
     chatNight.classList.add("hidden");
   }
 });
-           
+
 socket.on(SocketOnEvents.PLAYERS, (data) => {
   if (!data) {
     return;
@@ -431,8 +432,9 @@ class Player {
     }
 
     if (this.data.index <= 4) {
-      const backgroundX = WIDTH * (this.data.index - 1) + margin * (this.data.index - 1)
-      const imageX = backgroundX+30
+      const backgroundX =
+        WIDTH * (this.data.index - 1) + margin * (this.data.index - 1);
+      const imageX = backgroundX + 30;
       rect(
         backgroundX,
         HEIGHT * multiplier + margin * multiplier,
@@ -440,20 +442,13 @@ class Player {
         HEIGHT
       );
       fill(255);
-      image(images.bg,  backgroundX, this.position.HEIGHT, WIDTH, HEIGHT)
+      image(images.bg, backgroundX, this.position.HEIGHT, WIDTH, HEIGHT);
       if (this.data.alive) {
-        image(
-          images.man,
-          imageX,
-          HEIGHT * multiplier +30,
-          100,
-          HEIGHT - 30
-        );
+        image(images.man, imageX, HEIGHT * multiplier + 30, 100, HEIGHT - 30);
       }
-      
-      
-      textSize(12);
-      fill(0);
+
+      textSize(16);
+      fill(255);
       text(
         this.data.profile.name,
         WIDTH * (this.data.index - 1) + WIDTH / 2.5,
@@ -482,8 +477,8 @@ class Player {
         );
       }
 
-      textSize(12);
-      fill(0);
+      textSize(16);
+      fill(255);
       text(
         this.data.profile.name,
         WIDTH * (this.data.index - 1 - 4) + WIDTH / 3,
@@ -512,8 +507,8 @@ class Player {
         );
       }
 
-      textSize(12);
-      fill(0);
+      textSize(16);
+      fill(255);
       text(
         this.data.profile.name,
         WIDTH * (this.data.index - 1 - 8) + WIDTH / 3,
@@ -542,8 +537,8 @@ class Player {
         );
       }
 
-      textSize(12);
-      fill(0);
+      textSize(16);
+      fill(255);
       text(
         this.data.profile.name,
         WIDTH * (this.data.index - 1 - 12) + WIDTH / 3,
@@ -587,7 +582,7 @@ class Player {
       mouseY >= this.position.HEIGHT &&
       mouseY <= this.position.HEIGHT + HEIGHT
     ) {
-      if (this.data.socketId === socket.id || ROOM.turn === "LOBBY") {
+      if (ROOM.turn === "LOBBY") {
         return;
       }
       this.data.socketId && clickedOn(this.data.socketId);
@@ -604,12 +599,10 @@ function setup() {
   p5Canvas.parent(p5Div);
   loadImage("assets/images/man.png", (img) => (images.man = img));
   loadImage("assets/images/woman.png", (img) => (images.woman = img));
-  loadImage("assets/images/bg.png", (img => (images.bg = img)));
+  loadImage("assets/images/bg.png", (img) => (images.bg = img));
 }
 
 function draw() {
-  
-  
   PLAYERS.length > 0 && PLAYERS.forEach((player) => player.display());
 }
 

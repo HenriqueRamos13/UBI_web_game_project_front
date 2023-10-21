@@ -18,19 +18,23 @@
     ></script>
     <script src="./assets/consts.js"></script>
   </head>
-  <body class="bg-gray-800">
+  <body class="bg-gray-800 p-4">
+    <div
+      class="w-full h-[50px] mb-8 rounded border border-gray-400 flex items-center justofy-center"
+    >
+      <div class="w-full flex items-center justify-center m-auto">
+        <div id="timer" class="text-white text-2xl mr-4"></div>
+        <div id="room" class="text-white"></div>
+      </div>
+    </div>
     <div class="w-full flex flex-col">
       <div class="w-full flex flex-row items-center justify-between flex-wrap">
         <div class="w-full md:w-[50%] h-[50vh]">
           <div id="canvas" class="w-full h-full"></div>
         </div>
         <div class="w-full md:w-[50%] p-8">
-          <div class="w-full flex items-center justify-center">
-            <div id="timer" class="text-white text-2xl"></div>
-            <div id="room"></div>
-          </div>
           <div
-            class="w-full grid grid-cols-4 gap-8 rounded-sm p-8 bg-gray-900 rounded-lg"
+            class="w-full grid grid-cols-4 gap-8 rounded-sm p-8 bg-gray-900 rounded-lg h-full"
             id="roles"
           ></div>
         </div>
