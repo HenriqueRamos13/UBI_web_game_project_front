@@ -115,7 +115,7 @@ socket.on(SocketOnEvents.PLAYERS, (data) => {
 
   if (selfPlayer.data.role.name === "Combat Medic") {
     powersDiv.innerHTML = `
-    <div class="w-full flex items-center justify-center flex-col p-8" onclick="clickPower()">
+    <div class="w-full bg-white flex items-center justify-center flex-col p-8" onclick="clickPower()">
       <img
         class="inline-block h-14 w-14"
         src="https://i.imgur.com/stFaNUI.png"
@@ -226,7 +226,7 @@ socket.on(SocketOnEvents.PLAYERS, (data) => {
     <div class="w-full flex items-center justify-center flex-col p-8" onclick="clickPower()">
       <img
         class="inline-block h-14 w-14 rounded-full"
-        src="${selfPlayer.data.role.image}"
+        src="assets/images/abilities/reveal.png"
         alt=""
       />
       <p class="text-white">${selfPlayer.data.role.name}</p>
@@ -436,6 +436,8 @@ class Player {
         WIDTH * (this.data.index - 1) + margin * (this.data.index - 1);
       const imageX = backgroundX + 30;
       let nameWidth = textWidth(this.data.index + " " + this.data.profile.name);
+
+      
 
       fill(39,39,42);
       noStroke();
