@@ -34,6 +34,8 @@ let images = {
   woman: null,
 };
 
+let CLICKED_PLAYER = null 
+
 const API_URL_WS = "http://localhost:3001";
 // const API_URL_WS = "https://gameubi.onrender.com";
 
@@ -88,12 +90,18 @@ socket.on(SocketOnEvents.PLAYERS, (data) => {
     return new Player({ date: Date.now(), ...player });
   });
 
+
   const powersDiv = document.querySelector("#powers");
+
   const selfPlayer = PLAYERS.find(
-    (player) => player.data.socketId === socket.id
+    (player) => player.data.profile.id === localStorage.getItem("id")
   );
 
-  if (ROOM.turn === "LOBBY") return;
+  if (CLICKED_PLAYER != null) {
+    //alert(CLICKED_PLAYER)
+  }
+
+  //if (ROOM.turn === "LOBBY") return;
 
   const rolesDiv = document.querySelector("#roles");
 
@@ -101,7 +109,7 @@ socket.on(SocketOnEvents.PLAYERS, (data) => {
 
   PLAYERS.forEach((player) => {
     rolesDiv.innerHTML += `
-      <div class="w-30 flex items-center justify-center flex-col bg-zinc-700 rounded-lg">
+      <div class="w-[90px] h-[90px] flex items-center justify-center flex-col bg-zinc-700 rounded-lg">
         <img
           class="inline-block h-10 w-10 rounded-lg ${
             player.data.alive ? "" : "grayscale"
@@ -115,7 +123,6 @@ socket.on(SocketOnEvents.PLAYERS, (data) => {
       </div>
       `;
   });
-
   if (selfPlayer.data.role.name === "Combat Medic") {
     powersDiv.innerHTML = `
     <div class="w-full bg-white flex items-center justify-center flex-col p-8" onclick="clickPower()">
@@ -235,6 +242,12 @@ socket.on(SocketOnEvents.PLAYERS, (data) => {
       <p class="text-white">${selfPlayer.data.role.name}</p>
       <p class="text-center text-white">${selfPlayer.data.role.description}</p>
     </div>
+    `;
+  } else {
+    powersDiv.innerHTML = `
+    <div class="w-full flex items-center justify-center flex-col p-8" onclick="clickPower()">
+      <div class="rounded-full bg-zinc-700 h-[20px] w-[20px]"></div>
+      </div>
     `;
   }
 });
@@ -415,8 +428,8 @@ class Utils {
 }
 
 p5DivClone = document.getElementById("canvas");
-let WIDTH = Utils.elementWidth(p5DivClone) / 4;
-let HEIGHT = Utils.elementHeight(p5DivClone) / 3;
+let WIDTH = Utils.elementWidth(p5DivClone) / 5;
+let HEIGHT = Utils.elementHeight(p5DivClone) / 2;
 let margin = 5;
 let loadedImages = {};
 
@@ -470,7 +483,11 @@ class Player {
         5
       );
       textSize(12);
-      fill(255);
+      if(this.data.profile.id === localStorage.getItem("id")){
+        fill("red")
+      } else {
+        fill(255)
+      }
       text(
         this.data.index + " " + this.data.profile.name,
         WIDTH * (this.data.index - 1) + WIDTH / 2 - nameWidth / 2,
@@ -638,7 +655,9 @@ class Player {
       if (ROOM.turn === "LOBBY") {
         return;
       }
+      CLICKED_PLAYER = this.data.index
       this.data.socketId && clickedOn(this.data.socketId);
+      
     }
   }
 }
@@ -657,7 +676,7 @@ function setup() {
 }
 
 function draw() {
-  PLAYERS.length > 0 && PLAYERS.forEach((player) => player.display());
+  PLAYERS.forEach((player) => player.display());
 }
 
 function mouseClicked() {
