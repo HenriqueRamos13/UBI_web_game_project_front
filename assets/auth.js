@@ -20,6 +20,7 @@ async function login(e) {
     .then((x) => {
       if (x.token) {
         localStorage.setItem("token", x.token);
+        localStorage.setItem("id", x.id);
         window.location.href = "/game.html";
       } else {
         alert("erro " + x.message);
