@@ -1,11 +1,6 @@
 <!DOCTYPE html>
 <html class="h-full bg-white" lang="en">
   <head>
-    <style>
-      body {
-        background-image: url('./images/bgLogin.png');
-      }
-    </style>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Next Rebel</title>
@@ -13,29 +8,25 @@
     <script src="./assets/consts.js"></script>
   </head>
 
-  <body class="h-full">
+  <body class="h-full bg-cover"style="background-image: url('https://i.imgur.com/2iKccFg.jpg');">
     <div
-      class="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8"
+      class="flex min-h-full flex-1 flex-col justify-center px-6 py-1 lg:px-8"
     >
+    <div class="sm:mx-auto sm:w-full sm:max-w-sm bg-slate-800	bg-opacity-30 w-1/2 p-4 rounded-xl shadow-xl">
       <div class="sm:mx-auto sm:w-full sm:max-w-sm">
         <img
-          class="mx-auto h-10 w-auto"
-          src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
-          alt="Your Company"
+          class="mx-auto h-30 w-auto"
+          src="https://i.imgur.com/NFaGpWs.png"
+          alt="Next Rebel"
         />
-        <h2
-          class="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900"
-        >
-          Sign in to your account
-        </h2>
       </div>
 
-      <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+      <div class="mt-3 sm:mx-auto sm:w-full sm:max-w-sm">
         <form id="signup" class="space-y-6" method="POST">
           <div>
             <label
               htmlFor="email"
-              class="block text-sm font-medium leading-6 text-gray-900"
+              class="block text-sm font-medium leading-3 text-white"
             >
               Email address
             </label>
@@ -54,9 +45,9 @@
           <div>
             <label
               htmlFor="name"
-              class="block text-sm font-medium leading-6 text-gray-900"
+              class="block text-sm font-medium leading-3 text-white"
             >
-              Nick Name
+              Username
             </label>
             <div class="mt-2">
               <input
@@ -72,7 +63,7 @@
           <div>
             <label
               for="gender"
-              class="block text-sm font-medium leading-6 text-gray-900"
+              class="block text-sm font-medium leading-3 text-white"
               >Gender</label
             >
             <div class="mt-2">
@@ -83,7 +74,6 @@
               >
                 <option>Male</option>
                 <option>Female</option>
-                <option dsabled>Mexico</option>
               </select>
             </div>
           </div>
@@ -92,7 +82,7 @@
             <div class="flex items-center justify-between">
               <label
                 htmlFor="password"
-                class="block text-sm font-medium leading-6 text-gray-900"
+                class="block text-sm font-medium leading-3 text-white"
               >
                 Password
               </label>
@@ -112,22 +102,22 @@
           <div>
             <button
               type="submit"
-              class="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+              class="flex w-full justify-center rounded-md bg-purple-900 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-purple-950 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-purple-900"
             >
               Sign up
             </button>
           </div>
         </form>
 
-        <p class="mt-10 text-center text-sm text-gray-500">
-          Alreay a member?
+        <p class="mt-5 text-center text-sm text-white">
+          Already have an account?
           <a
-            href="index.html"
-            class="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
+            class="font-semibold leading-6 text-white hover:text-purple-900"
           >
             Login
           </a>
         </p>
+      </div>
       </div>
     </div>
   </body>

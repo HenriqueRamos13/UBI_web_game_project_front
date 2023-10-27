@@ -101,22 +101,22 @@ socket.on(SocketOnEvents.PLAYERS, (data) => {
 
   PLAYERS.forEach((player) => {
     rolesDiv.innerHTML += `
-      <div class="w-full flex items-center justify-center flex-col">
+      <div class="w-30 flex items-center justify-center flex-col bg-zinc-700 rounded-lg">
         <img
-          class="inline-block h-14 w-14 rounded-full ${
+          class="inline-block h-10 w-10 rounded-lg ${
             player.data.alive ? "" : "grayscale"
           }"
           src="${player.data.role.image}"
           alt=""
         />
-        <p class="text-white">${player.data.role.name}</p>
+        <p class="text-white text-xs text-center uppercase">${player.data.role.name}</p>
       </div>
       `;
   });
 
   if (selfPlayer.data.role.name === "Combat Medic") {
     powersDiv.innerHTML = `
-    <div class="w-full flex items-center justify-center flex-col p-8" onclick="clickPower()">
+    <div class="w-full bg-white flex items-center justify-center flex-col p-8" onclick="clickPower()">
       <img
         class="inline-block h-14 w-14"
         src="https://i.imgur.com/stFaNUI.png"
@@ -227,7 +227,7 @@ socket.on(SocketOnEvents.PLAYERS, (data) => {
     <div class="w-full flex items-center justify-center flex-col p-8" onclick="clickPower()">
       <img
         class="inline-block h-14 w-14 rounded-full"
-        src="${selfPlayer.data.role.image}"
+        src="assets/images/abilities/reveal.png"
         alt=""
       />
       <p class="text-white">${selfPlayer.data.role.name}</p>
@@ -442,24 +442,36 @@ class Player {
       const backgroundX =
         WIDTH * (this.data.index - 1) + margin * (this.data.index - 1);
       const imageX = backgroundX + 30;
+      let nameWidth = textWidth(this.data.index + " " + this.data.profile.name);
+
+      
+
+      fill(39,39,42);
+      noStroke();
       rect(
         backgroundX,
         HEIGHT * multiplier + margin * multiplier,
         WIDTH,
         HEIGHT
       );
-      fill(255);
-      image(images.bg, backgroundX, this.position.HEIGHT, WIDTH, HEIGHT);
+      image(images.bgDay, backgroundX, this.position.HEIGHT, WIDTH, HEIGHT);
       if (this.data.alive) {
-        image(images.man, imageX, HEIGHT * multiplier + 30, 100, HEIGHT - 30);
+        image(images.woman, imageX, HEIGHT * multiplier + 30, 100, HEIGHT - 30);
       }
 
-      textSize(16);
+      fill(0,0,0,120)
+      rect(
+        WIDTH * (this.data.index - 1) + WIDTH / 2 - ((nameWidth+30)/2),
+        HEIGHT * multiplier + 5,
+        nameWidth + 30,
+        HEIGHT/6,
+        5)
+      textSize(12);
       fill(255);
       text(
-        this.data.profile.name,
-        WIDTH * (this.data.index - 1) + WIDTH / 2.5,
-        HEIGHT * multiplier + HEIGHT - 95
+        this.data.index + " " + this.data.profile.name,
+        WIDTH * (this.data.index - 1) + WIDTH / 2 - (nameWidth/2),
+        HEIGHT * multiplier + HEIGHT/5 -4
       );
 
       this.position = {
@@ -467,29 +479,38 @@ class Player {
         HEIGHT: HEIGHT * multiplier,
       };
     } else if (this.data.index <= 8) {
+      const backgroundX =
+        WIDTH * (this.data.index - 1 -4) + margin * (this.data.index - 1 - 4);
+      const imageX = backgroundX + 30;
+      let nameWidth = textWidth(this.data.index + " " + this.data.profile.name);
+
+      fill(39,39,42);
+      noStroke();
       rect(
-        WIDTH * (this.data.index - 1 - 4),
-        HEIGHT * multiplier,
+        backgroundX,
+        HEIGHT * multiplier + margin * multiplier,
         WIDTH,
         HEIGHT
       );
-      fill(255);
-      if (this.data.alive) {
-        image(
-          images.man,
-          WIDTH * (this.data.index - 1 - 4),
-          HEIGHT * multiplier,
-          WIDTH,
-          HEIGHT - 30
-        );
-      }
 
-      textSize(16);
+      image(images.bgDay, backgroundX, this.position.HEIGHT, WIDTH, HEIGHT);
+      if (this.data.alive) {
+        image(images.woman, imageX, HEIGHT * multiplier + 30, 100, HEIGHT - 30);
+      }
+      fill(0,0,0,120)
+      rect(
+        WIDTH * (this.data.index - 1 - 4) + WIDTH / 2 - ((nameWidth+30)/2),
+        HEIGHT * multiplier + 5,
+        nameWidth + 30,
+        HEIGHT/6,
+        5)
+      textSize(12);
       fill(255);
+      
       text(
-        this.data.profile.name,
-        WIDTH * (this.data.index - 1 - 4) + WIDTH / 3,
-        HEIGHT * multiplier + HEIGHT - 10
+        this.data.index + " " + this.data.profile.name,
+        WIDTH * (this.data.index - 1 - 4) + WIDTH / 2 - (nameWidth/2),
+        HEIGHT * multiplier + HEIGHT/5 -4
       );
 
       this.position = {
@@ -497,29 +518,38 @@ class Player {
         HEIGHT: HEIGHT * multiplier,
       };
     } else if (this.data.index <= 12) {
+      const backgroundX =
+        WIDTH * (this.data.index - 1 -8) + margin * (this.data.index - 1 - 8);
+      const imageX = backgroundX + 30;
+      let nameWidth = textWidth(this.data.index + " " + this.data.profile.name);
+
+      fill(39,39,42);
+      noStroke();
       rect(
-        WIDTH * (this.data.index - 1 - 8),
-        HEIGHT * multiplier,
+        backgroundX,
+        HEIGHT * multiplier + margin * multiplier,
         WIDTH,
         HEIGHT
       );
-      fill(255);
-      if (this.data.alive) {
-        image(
-          images.man,
-          WIDTH * (this.data.index - 1 - 8),
-          HEIGHT * multiplier,
-          WIDTH,
-          HEIGHT - 30
-        );
-      }
 
-      textSize(16);
+      image(images.bgDay, backgroundX, this.position.HEIGHT, WIDTH, HEIGHT);
+      if (this.data.alive) {
+        image(images.woman, imageX, HEIGHT * multiplier + 30, 100, HEIGHT - 30);
+      }
+      fill(0,0,0,120)
+      rect(
+        WIDTH * (this.data.index - 1 - 8) + WIDTH / 2 - ((nameWidth+30)/2),
+        HEIGHT * multiplier + 5,
+        nameWidth + 30,
+        HEIGHT/6,
+        5)
+      textSize(12);
       fill(255);
+      
       text(
-        this.data.profile.name,
-        WIDTH * (this.data.index - 1 - 8) + WIDTH / 3,
-        HEIGHT * multiplier + HEIGHT - 10
+        this.data.index + " " + this.data.profile.name,
+        WIDTH * (this.data.index - 1 -8) + WIDTH / 2 - (nameWidth/2),
+        HEIGHT * multiplier + HEIGHT/5 -4
       );
 
       this.position = {
@@ -527,30 +557,40 @@ class Player {
         HEIGHT: HEIGHT * multiplier,
       };
     } else {
+      const backgroundX =
+        WIDTH * (this.data.index - 1 - 12) + margin * (this.data.index - 1 - 12);
+      const imageX = backgroundX + 30;
+      let nameWidth = textWidth(this.data.index + " " + this.data.profile.name);
+
+      fill(39,39,42);
+      noStroke();
       rect(
-        WIDTH * (this.data.index - 1 - 12),
-        HEIGHT * multiplier,
+        backgroundX,
+        HEIGHT * multiplier + margin * multiplier,
         WIDTH,
         HEIGHT
       );
-      fill(255);
-      if (this.data.alive) {
-        image(
-          images.man,
-          WIDTH * (this.data.index - 1 - 12),
-          HEIGHT * multiplier,
-          WIDTH,
-          HEIGHT - 30
-        );
-      }
 
-      textSize(16);
+      image(images.bgDay, backgroundX, this.position.HEIGHT, WIDTH, HEIGHT);
+      if (this.data.alive) {
+        image(images.woman, imageX, HEIGHT * multiplier + 30, 100, HEIGHT - 30);
+      }
+      fill(0,0,0,120)
+      rect(
+        WIDTH * (this.data.index - 1 - 12) + WIDTH / 2 - ((nameWidth+30)/2),
+        HEIGHT * multiplier + 5,
+        nameWidth + 30,
+        HEIGHT/6,
+        5)
+      textSize(12);
       fill(255);
+      
       text(
-        this.data.profile.name,
-        WIDTH * (this.data.index - 1 - 12) + WIDTH / 3,
-        HEIGHT * multiplier + HEIGHT - 10
+        this.data.index + " " + this.data.profile.name,
+        WIDTH * (this.data.index - 1 - 12) + WIDTH / 2 - (nameWidth/2),
+        HEIGHT * multiplier + HEIGHT/5 -4
       );
+
 
       this.position = {
         WIDTH: WIDTH * (this.data.index - 1 - 12),
@@ -606,7 +646,8 @@ function setup() {
   p5Canvas.parent(p5Div);
   loadImage("assets/images/man.png", (img) => (images.man = img));
   loadImage("assets/images/woman.png", (img) => (images.woman = img));
-  loadImage("assets/images/bg.png", (img) => (images.bg = img));
+  loadImage("assets/images/playerBgDay.png", (img) => (images.bgDay = img));
+  loadImage("assets/images/playerBgNight.png", (img) => (images.bgNight = img));
 }
 
 function draw() {
