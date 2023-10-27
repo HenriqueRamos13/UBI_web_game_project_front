@@ -5,6 +5,7 @@ const SocketEmitEvents = {
   CHAT: "chat",
   CHAT_NIGHT: "chat-night",
   CHAT_TO: "chat-to",
+  UPDATE: "update",
 };
 
 const SocketOnEvents = {
@@ -366,13 +367,19 @@ socket.on(SocketOnEvents.PONG, () => {
     pingElement.innerText = ping + "ms";
     document.body.appendChild(pingElement);
   }
-
-  createRoomTimer();
 });
 
 setInterval(() => {
   timeStart = Date.now();
   socket.emit(SocketEmitEvents.PING, "ping");
+
+  let roomTime = new Date(ROOM.actualTurnStartedAt);
+
+  createRoomTimer();
+
+  if (roomTime.getTime() + 30000 <= Date.now()) {
+    socket.emit(SocketEmitEvents.UPDATE, "update");
+  }
 }, 1000);
 
 class Utils {
