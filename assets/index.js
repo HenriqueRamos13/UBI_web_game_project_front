@@ -157,6 +157,14 @@ socket.on(SocketOnEvents.CHAT, ({ message, sockId, sender }) => {
 });
 
 socket.on(SocketOnEvents.CHAT_NIGHT, ({ message, sockId, sender }) => {
+  const self = PLAYERS.find(
+    (player) => player.data.profile.id === localStorage.getItem("id")
+  );
+  console.log(self);
+  if (self.data.role.team === "REBEL" || self.data.role.team === "SOLO") {
+    return;
+  }
+
   if (sockId === socket.id) {
     appendOnChat(`You: ${message}`, null, true);
   } else {
@@ -167,12 +175,6 @@ socket.on(SocketOnEvents.CHAT_NIGHT, ({ message, sockId, sender }) => {
 socket.on(SocketOnEvents.CHAT_TO, ({ message, sender }) => {
   appendOnChat(`${sender}: ${message}`, "bg-blue-800", ROOM.turn === "NIGHT");
 });
-
-const chatForm = document.getElementById("chat-form");
-chatForm.onsubmit = (e) => {
-  e.preventDefault();
-  sendMessage();
-};
 
 function finishGame() {
   const chat = document.querySelector("#chat");
@@ -191,10 +193,18 @@ function handleSkill(sockId) {
   socket.emit(SocketEmitEvents.HANDLE_SKILL, { target: sockId });
 }
 
+const chatForm = document.getElementById("chat-form");
+chatForm.onsubmit = (e) => {
+  e.preventDefault();
+  sendMessage();
+};
+
 function sendMessage() {
   const msg = document.querySelector("#message");
-
-  socket.emit(SocketEmitEvents.CHAT, { message: msg.value });
+  socket.emit(
+    ROOM.turn === "NIGHT" ? SocketEmitEvents.CHAT_NIGHT : SocketEmitEvents.CHAT,
+    { message: msg.value }
+  );
 
   msg.value = "";
 }
@@ -663,13 +673,23 @@ class Player {
         5
       );
       textSize(12);
-      if (this.data.profile.id === localStorage.getItem("id") && ROOM.turn === "NIGHT") {
+      if (
+        this.data.profile.id === localStorage.getItem("id") &&
+        ROOM.turn === "NIGHT"
+      ) {
         textStyle(BOLD);
         fill("#1f5b4e");
-      } else if(this.data.profile.id === localStorage.getItem("id") && ROOM.turn === "DAY" || this.data.profile.id === localStorage.getItem("id") && ROOM.turn === "LOBBY" || this.data.profile.id === localStorage.getItem("id") && ROOM.turn === "VOTE" ){ 
+      } else if (
+        (this.data.profile.id === localStorage.getItem("id") &&
+          ROOM.turn === "DAY") ||
+        (this.data.profile.id === localStorage.getItem("id") &&
+          ROOM.turn === "LOBBY") ||
+        (this.data.profile.id === localStorage.getItem("id") &&
+          ROOM.turn === "VOTE")
+      ) {
         textStyle(BOLD);
         fill("#22323f");
-      }else {
+      } else {
         fill(255);
       }
       text(
@@ -711,13 +731,23 @@ class Player {
         5
       );
       textSize(12);
-      if (this.data.profile.id === localStorage.getItem("id") && ROOM.turn === "NIGHT") {
+      if (
+        this.data.profile.id === localStorage.getItem("id") &&
+        ROOM.turn === "NIGHT"
+      ) {
         textStyle(BOLD);
         fill("#1f5b4e");
-      } else if(this.data.profile.id === localStorage.getItem("id") && ROOM.turn === "DAY" || this.data.profile.id === localStorage.getItem("id") && ROOM.turn === "LOBBY" || this.data.profile.id === localStorage.getItem("id") && ROOM.turn === "VOTE" ){ 
+      } else if (
+        (this.data.profile.id === localStorage.getItem("id") &&
+          ROOM.turn === "DAY") ||
+        (this.data.profile.id === localStorage.getItem("id") &&
+          ROOM.turn === "LOBBY") ||
+        (this.data.profile.id === localStorage.getItem("id") &&
+          ROOM.turn === "VOTE")
+      ) {
         textStyle(BOLD);
         fill("#22323f");
-      }else {
+      } else {
         fill(255);
       }
       text(
@@ -766,6 +796,9 @@ class Player {
       if (ROOM.turn === "LOBBY") {
         return;
       }
+      if (this.data.role.team === "REBEL" && ROOM.turn === "NIGHT" && !SKILL) {
+        return;
+      }
       CLICKED_PLAYER = this.data.index;
       this.data.socketId && clickedOn(this.data.socketId);
     }
@@ -782,8 +815,14 @@ function setup() {
   loadImage("assets/images/avatars/man.png", (img) => (images.man = img));
   loadImage("assets/images/avatars/woman.png", (img) => (images.woman = img));
   loadImage("assets/images/bgs/playerDayBg.png", (img) => (images.bgDay = img));
-  loadImage("assets/images/bgs/playerNightBg.png", (img) => (images.bgNight = img));
-  loadImage("assets/images/avatars/tombstone.png", (img) => (images.tombstone = img));
+  loadImage(
+    "assets/images/bgs/playerNightBg.png",
+    (img) => (images.bgNight = img)
+  );
+  loadImage(
+    "assets/images/avatars/tombstone.png",
+    (img) => (images.tombstone = img)
+  );
 }
 
 function draw() {
