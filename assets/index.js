@@ -221,6 +221,7 @@ function appendOnChat(message, background = null, night = false) {
 }
 
 function clickedOn(sockId) {
+  console.log("turn is " + ROOM + " clickedOn " + sockId);
   if (SKILL) {
     handleSkill(sockId);
     SKILL = false;
@@ -359,23 +360,64 @@ class Player {
       multiplier = 3;
     }
 
+    //DRAW PLAYERS
     if (this.data.index <= 4) {
       const backgroundX =
         WIDTH * (this.data.index - 1) + margin * (this.data.index - 1);
-      const imageX = backgroundX + 30;
+
+      const imageX = backgroundX + 25;
+
       let nameWidth = textWidth(this.data.index + " " + this.data.profile.name);
 
       fill(39, 39, 42);
       noStroke();
       rect(
         backgroundX,
-        HEIGHT * multiplier + margin * multiplier,
+        HEIGHT * multiplier + margin * multiplier + 20,
         WIDTH,
         HEIGHT
       );
-      image(images.bgDay, backgroundX, this.position.HEIGHT, WIDTH, HEIGHT);
-      if (this.data.alive) {
-        image(images.woman, imageX, HEIGHT * multiplier + 30, 100, HEIGHT - 30);
+
+      if (ROOM.turn === "NIGHT") {
+        image(images.bgNight, backgroundX, this.position.HEIGHT, WIDTH, HEIGHT);
+
+        if (this.data.alive) {
+          image(
+            images.woman,
+            imageX,
+            HEIGHT * multiplier + 50,
+            110,
+            HEIGHT - 50
+          );
+        } else {
+          image(
+            images.tombstone,
+            imageX + 15,
+            HEIGHT * multiplier + 79,
+            80,
+            80
+          );
+        }
+      } else {
+        image(images.bgDay, backgroundX, this.position.HEIGHT, WIDTH, HEIGHT);
+
+        if (this.data.alive) {
+          image(
+            images.woman,
+            imageX,
+            HEIGHT * multiplier + 50,
+            110,
+            HEIGHT - 50
+          );
+        } else {
+          image(
+            images.tombstone,
+            imageX + 15,
+            HEIGHT * multiplier + 79,
+            80,
+            80
+          );
+        }
       }
 
       fill(0, 0, 0, 120);
@@ -383,19 +425,34 @@ class Player {
         WIDTH * (this.data.index - 1) + WIDTH / 2 - (nameWidth + 30) / 2,
         HEIGHT * multiplier + 5,
         nameWidth + 30,
-        HEIGHT / 6,
+        HEIGHT / 9,
         5
       );
+
       textSize(12);
-      if (this.data.profile.id === localStorage.getItem("id")) {
-        fill("red");
+      if (
+        this.data.profile.id === localStorage.getItem("id") &&
+        ROOM.turn === "NIGHT"
+      ) {
+        textStyle(BOLD);
+        fill("#1f5b4e");
+      } else if (
+        (this.data.profile.id === localStorage.getItem("id") &&
+          ROOM.turn === "DAY") ||
+        (this.data.profile.id === localStorage.getItem("id") &&
+          ROOM.turn === "LOBBY") ||
+        (this.data.profile.id === localStorage.getItem("id") &&
+          ROOM.turn === "VOTE")
+      ) {
+        textStyle(BOLD);
+        fill("#22323f");
       } else {
         fill(255);
       }
       text(
         this.data.index + " " + this.data.profile.name,
         WIDTH * (this.data.index - 1) + WIDTH / 2 - nameWidth / 2,
-        HEIGHT * multiplier + HEIGHT / 5 - 4
+        HEIGHT * multiplier + HEIGHT / 5 - 14
       );
 
       this.position = {
@@ -405,7 +462,9 @@ class Player {
     } else if (this.data.index <= 8) {
       const backgroundX =
         WIDTH * (this.data.index - 1 - 4) + margin * (this.data.index - 1 - 4);
+
       const imageX = backgroundX + 30;
+
       let nameWidth = textWidth(this.data.index + " " + this.data.profile.name);
 
       fill(39, 39, 42);
@@ -417,10 +476,48 @@ class Player {
         HEIGHT
       );
 
-      image(images.bgDay, backgroundX, this.position.HEIGHT, WIDTH, HEIGHT);
-      if (this.data.alive) {
-        image(images.woman, imageX, HEIGHT * multiplier + 30, 100, HEIGHT - 30);
+      if (ROOM.turn === "NIGHT") {
+        image(images.bgNight, backgroundX, this.position.HEIGHT, WIDTH, HEIGHT);
+
+        if (this.data.alive) {
+          image(
+            images.woman,
+            imageX,
+            HEIGHT * multiplier + 30,
+            100,
+            HEIGHT - 30
+          );
+        } else {
+          image(
+            images.tombstone,
+            imageX + 15,
+            HEIGHT * multiplier + 79,
+            80,
+            80
+          );
+        }
+      } else {
+        image(images.bgDay, backgroundX, this.position.HEIGHT, WIDTH, HEIGHT);
+
+        if (this.data.alive) {
+          image(
+            images.woman,
+            imageX,
+            HEIGHT * multiplier + 30,
+            100,
+            HEIGHT - 30
+          );
+        } else {
+          image(
+            images.tombstone,
+            imageX + 15,
+            HEIGHT * multiplier + 79,
+            80,
+            80
+          );
+        }
       }
+
       fill(0, 0, 0, 120);
       rect(
         WIDTH * (this.data.index - 1 - 4) + WIDTH / 2 - (nameWidth + 30) / 2,
@@ -430,8 +527,25 @@ class Player {
         5
       );
       textSize(12);
-      fill(255);
-
+      if (
+        this.data.profile.id === localStorage.getItem("id") &&
+        ROOM.turn === "NIGHT"
+      ) {
+        textStyle(BOLD);
+        fill("#1f5b4e");
+      } else if (
+        (this.data.profile.id === localStorage.getItem("id") &&
+          ROOM.turn === "DAY") ||
+        (this.data.profile.id === localStorage.getItem("id") &&
+          ROOM.turn === "LOBBY") ||
+        (this.data.profile.id === localStorage.getItem("id") &&
+          ROOM.turn === "VOTE")
+      ) {
+        textStyle(BOLD);
+        fill("#22323f");
+      } else {
+        fill(255);
+      }
       text(
         this.data.index + " " + this.data.profile.name,
         WIDTH * (this.data.index - 1 - 4) + WIDTH / 2 - nameWidth / 2,
@@ -445,7 +559,9 @@ class Player {
     } else if (this.data.index <= 12) {
       const backgroundX =
         WIDTH * (this.data.index - 1 - 8) + margin * (this.data.index - 1 - 8);
+
       const imageX = backgroundX + 30;
+
       let nameWidth = textWidth(this.data.index + " " + this.data.profile.name);
 
       fill(39, 39, 42);
@@ -457,9 +573,46 @@ class Player {
         HEIGHT
       );
 
-      image(images.bgDay, backgroundX, this.position.HEIGHT, WIDTH, HEIGHT);
-      if (this.data.alive) {
-        image(images.woman, imageX, HEIGHT * multiplier + 30, 100, HEIGHT - 30);
+      if (ROOM.turn === "NIGHT") {
+        image(images.bgNight, backgroundX, this.position.HEIGHT, WIDTH, HEIGHT);
+
+        if (this.data.alive) {
+          image(
+            images.woman,
+            imageX,
+            HEIGHT * multiplier + 30,
+            100,
+            HEIGHT - 30
+          );
+        } else {
+          image(
+            images.tombstone,
+            imageX + 15,
+            HEIGHT * multiplier + 79,
+            80,
+            80
+          );
+        }
+      } else {
+        image(images.bgDay, backgroundX, this.position.HEIGHT, WIDTH, HEIGHT);
+
+        if (this.data.alive) {
+          image(
+            images.woman,
+            imageX,
+            HEIGHT * multiplier + 30,
+            100,
+            HEIGHT - 30
+          );
+        } else {
+          image(
+            images.tombstone,
+            imageX + 15,
+            HEIGHT * multiplier + 79,
+            80,
+            80
+          );
+        }
       }
       fill(0, 0, 0, 120);
       rect(
@@ -470,8 +623,25 @@ class Player {
         5
       );
       textSize(12);
-      fill(255);
-
+      if (
+        this.data.profile.id === localStorage.getItem("id") &&
+        ROOM.turn === "NIGHT"
+      ) {
+        textStyle(BOLD);
+        fill("#1f5b4e");
+      } else if (
+        (this.data.profile.id === localStorage.getItem("id") &&
+          ROOM.turn === "DAY") ||
+        (this.data.profile.id === localStorage.getItem("id") &&
+          ROOM.turn === "LOBBY") ||
+        (this.data.profile.id === localStorage.getItem("id") &&
+          ROOM.turn === "VOTE")
+      ) {
+        textStyle(BOLD);
+        fill("#22323f");
+      } else {
+        fill(255);
+      }
       text(
         this.data.index + " " + this.data.profile.name,
         WIDTH * (this.data.index - 1 - 8) + WIDTH / 2 - nameWidth / 2,
@@ -511,8 +681,25 @@ class Player {
         5
       );
       textSize(12);
-      fill(255);
-
+      if (
+        this.data.profile.id === localStorage.getItem("id") &&
+        ROOM.turn === "NIGHT"
+      ) {
+        textStyle(BOLD);
+        fill("#1f5b4e");
+      } else if (
+        (this.data.profile.id === localStorage.getItem("id") &&
+          ROOM.turn === "DAY") ||
+        (this.data.profile.id === localStorage.getItem("id") &&
+          ROOM.turn === "LOBBY") ||
+        (this.data.profile.id === localStorage.getItem("id") &&
+          ROOM.turn === "VOTE")
+      ) {
+        textStyle(BOLD);
+        fill("#22323f");
+      } else {
+        fill(255);
+      }
       text(
         this.data.index + " " + this.data.profile.name,
         WIDTH * (this.data.index - 1 - 12) + WIDTH / 2 - nameWidth / 2,
@@ -575,10 +762,17 @@ function setup() {
     Utils.elementHeight(p5Div)
   );
   p5Canvas.parent(p5Div);
-  loadImage("assets/images/man.png", (img) => (images.man = img));
-  loadImage("assets/images/woman.png", (img) => (images.woman = img));
-  loadImage("assets/images/playerBgDay.png", (img) => (images.bgDay = img));
-  loadImage("assets/images/playerBgNight.png", (img) => (images.bgNight = img));
+  loadImage("assets/images/avatars/man.png", (img) => (images.man = img));
+  loadImage("assets/images/avatars/woman.png", (img) => (images.woman = img));
+  loadImage("assets/images/bgs/playerDayBg.png", (img) => (images.bgDay = img));
+  loadImage(
+    "assets/images/bgs/playerNightBg.png",
+    (img) => (images.bgNight = img)
+  );
+  loadImage(
+    "assets/images/avatars/tombstone.png",
+    (img) => (images.tombstone = img)
+  );
 }
 
 function draw() {
