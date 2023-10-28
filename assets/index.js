@@ -168,12 +168,6 @@ socket.on(SocketOnEvents.CHAT_TO, ({ message, sender }) => {
   appendOnChat(`${sender}: ${message}`, "bg-blue-800", ROOM.turn === "NIGHT");
 });
 
-const chatForm = document.getElementById("chat-form");
-chatForm.onsubmit = (e) => {
-  e.preventDefault();
-  sendMessage();
-};
-
 function finishGame() {
   const chat = document.querySelector("#chat");
   const chatNight = document.querySelector("#chat-night");
@@ -191,10 +185,18 @@ function handleSkill(sockId) {
   socket.emit(SocketEmitEvents.HANDLE_SKILL, { target: sockId });
 }
 
+const chatForm = document.getElementById("chat-form");
+chatForm.onsubmit = (e) => {
+  e.preventDefault();
+  sendMessage();
+};
+
 function sendMessage() {
   const msg = document.querySelector("#message");
-
-  socket.emit(SocketEmitEvents.CHAT, { message: msg.value });
+  socket.emit(
+    ROOM.turn === "NIGHT" ? SocketEmitEvents.CHAT_NIGHT : SocketEmitEvents.CHAT,
+    { message: msg.value }
+  );
 
   msg.value = "";
 }
@@ -211,7 +213,6 @@ function appendOnChat(message, background = null, night = false) {
 }
 
 function clickedOn(sockId) {
-  console.log("turn is " + ROOM + " clickedOn " + sockId);
   if (SKILL) {
     handleSkill(sockId);
     SKILL = false;
@@ -548,6 +549,9 @@ class Player {
       mouseY <= this.position.HEIGHT + HEIGHT
     ) {
       if (ROOM.turn === "LOBBY") {
+        return;
+      }
+      if (this.data.role.team === "REBEL" && ROOM.turn === "NIGHT" && !SKILL) {
         return;
       }
       CLICKED_PLAYER = this.data.index;
