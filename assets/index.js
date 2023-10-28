@@ -157,6 +157,14 @@ socket.on(SocketOnEvents.CHAT, ({ message, sockId, sender }) => {
 });
 
 socket.on(SocketOnEvents.CHAT_NIGHT, ({ message, sockId, sender }) => {
+  const self = PLAYERS.find(
+    (player) => player.data.profile.id === localStorage.getItem("id")
+  );
+  console.log(self);
+  if (self.data.role.team === "REBEL" || self.data.role.team === "SOLO") {
+    return;
+  }
+
   if (sockId === socket.id) {
     appendOnChat(`You: ${message}`, null, true);
   } else {

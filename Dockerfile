@@ -1,11 +1,16 @@
-# Use uma imagem base adequada para um servidor da web
-FROM nginx:latest
+# Use uma imagem base adequada para o aplicativo Node.js
+FROM node:latest
 
-# Copie os arquivos estáticos do aplicativo para o diretório padrão do servidor da web do Nginx
-COPY . /usr/share/nginx/html
+# Defina o diretório de trabalho no contêiner
+WORKDIR /app
+
+# Copie os arquivos de código-fonte do aplicativo para o contêiner
+COPY . .
 
 # Exponha a porta 80 para o servidor da web
-EXPOSE 80
+EXPOSE 3000
+
+RUN npm install -g serve
 
 # Comando para iniciar o servidor da web Nginx em segundo plano
-CMD ["nginx", "-g", "daemon off;"]
+CMD ["serve"]
