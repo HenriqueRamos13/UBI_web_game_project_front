@@ -463,6 +463,7 @@ class Player {
         this.data.profile.id === localStorage.getItem("id") && 
         ROOM.turn === "VOTE" 
         ){ 
+        push()
         textStyle(BOLD);
         fill("#22323f");
       }else {
@@ -473,6 +474,17 @@ class Player {
         WIDTH * (this.data.index - 1) + WIDTH / 2 - nameWidth / 2,
         HEIGHT * multiplier + HEIGHT / 5 - 14
       );
+      pop();
+
+      if(ROOM.turn === "VOTE" && this.data.voteIn != null) {
+        push();
+        fill(255)
+        textSize(20)
+        text(
+          String(this.data.voteIn), WIDTH * (this.data.index - 1) + WIDTH/3 + 15,HEIGHT * multiplier + 150
+        )
+        pop();
+      }
  
       this.position = {
         WIDTH: WIDTH * (this.data.index - 1),
@@ -697,7 +709,7 @@ class Player {
         WIDTH * (this.data.index - 1 - 8) + WIDTH / 2 - nameWidth / 2,
         HEIGHT * multiplier + HEIGHT / 5 - 4
       );
-
+      
       this.position = {
         WIDTH: WIDTH * (this.data.index - 1 - 8),
         HEIGHT: HEIGHT * multiplier,
