@@ -359,21 +359,15 @@ class Player {
     } else {
       multiplier = 3;
     }
-    
+
     //DRAW PLAYERS
     if (this.data.index <= 4) {
       const backgroundX =
-        WIDTH * (this.data.index - 1) + 
-        margin * (this.data.index - 1
-      );
+        WIDTH * (this.data.index - 1) + margin * (this.data.index - 1);
 
       const imageX = backgroundX + 25;
 
-      let nameWidth = textWidth(
-        this.data.index + 
-        " " + 
-        this.data.profile.name
-      );
+      let nameWidth = textWidth(this.data.index + " " + this.data.profile.name);
 
       fill(39, 39, 42);
       noStroke();
@@ -384,23 +378,17 @@ class Player {
         HEIGHT
       );
 
-      if(ROOM.turn === "NIGHT"){
-        image(
-          images.bgNight, 
-          backgroundX, 
-          this.position.HEIGHT, 
-          WIDTH, 
-          HEIGHT
-          );
+      if (ROOM.turn === "NIGHT") {
+        image(images.bgNight, backgroundX, this.position.HEIGHT, WIDTH, HEIGHT);
 
         if (this.data.alive) {
           image(
-            images.woman, 
-            imageX, 
-            HEIGHT * multiplier + 50, 
-            110, 
+            images.woman,
+            imageX,
+            HEIGHT * multiplier + 50,
+            110,
             HEIGHT - 50
-            );
+          );
         } else {
           image(
             images.tombstone,
@@ -408,26 +396,19 @@ class Player {
             HEIGHT * multiplier + 79,
             80,
             80
-          )
+          );
         }
       } else {
-        image(
-          images.bgDay, 
-          backgroundX, 
-          this.position.HEIGHT, 
-          WIDTH, 
-          HEIGHT
-          );
+        image(images.bgDay, backgroundX, this.position.HEIGHT, WIDTH, HEIGHT);
 
         if (this.data.alive) {
           image(
-            images.woman, 
-            imageX, 
-            HEIGHT * multiplier + 50, 
-            110, 
+            images.woman,
+            imageX,
+            HEIGHT * multiplier + 50,
+            110,
             HEIGHT - 50
-            );
-
+          );
         } else {
           image(
             images.tombstone,
@@ -435,7 +416,7 @@ class Player {
             HEIGHT * multiplier + 79,
             80,
             80
-          )
+          );
         }
       }
 
@@ -450,23 +431,23 @@ class Player {
 
       textSize(12);
       if (
-        this.data.profile.id === localStorage.getItem("id") && 
+        this.data.profile.id === localStorage.getItem("id") &&
         ROOM.turn === "NIGHT"
-        ) {
+      ) {
         textStyle(BOLD);
         fill("#1f5b4e");
-      } else if(
-        this.data.profile.id === localStorage.getItem("id") && 
-        ROOM.turn === "DAY" || 
-        this.data.profile.id === localStorage.getItem("id") && 
-        ROOM.turn === "LOBBY" || 
-        this.data.profile.id === localStorage.getItem("id") && 
-        ROOM.turn === "VOTE" 
-        ){ 
-        push()
+      } else if (
+        (this.data.profile.id === localStorage.getItem("id") &&
+          ROOM.turn === "DAY") ||
+        (this.data.profile.id === localStorage.getItem("id") &&
+          ROOM.turn === "LOBBY") ||
+        (this.data.profile.id === localStorage.getItem("id") &&
+          ROOM.turn === "VOTE")
+      ) {
+        push();
         textStyle(BOLD);
         fill("#22323f");
-      }else {
+      } else {
         fill(255);
       }
       text(
@@ -476,34 +457,31 @@ class Player {
       );
       pop();
 
-      if(ROOM.turn === "VOTE" && this.data.voteIn != null) {
-        push();
-        fill(255)
-        textSize(20)
-        text(
-          String(this.data.voteIn), WIDTH * (this.data.index - 1) + WIDTH/3 + 15,HEIGHT * multiplier + 150
-        )
-        pop();
-      }
- 
       this.position = {
         WIDTH: WIDTH * (this.data.index - 1),
         HEIGHT: HEIGHT * multiplier,
       };
+
+      if (
+        (ROOM.turn === "VOTE" || ROOM.turn === "NIGHT") &&
+        this.data.voteIn != null
+      ) {
+        push();
+        fill("red");
+        text(
+          ">" + this.data.voteIn + "<",
+          WIDTH * (this.data.index - 1) + WIDTH / 2 + 90,
+          HEIGHT * multiplier + HEIGHT / 5 - 14 - 17
+        );
+        pop();
+      }
     } else if (this.data.index <= 8) {
       const backgroundX =
-        WIDTH * 
-        (this.data.index - 1 - 4) +
-        margin * 
-        (this.data.index - 1 - 4);
+        WIDTH * (this.data.index - 1 - 4) + margin * (this.data.index - 1 - 4);
 
       const imageX = backgroundX + 30;
 
-      let nameWidth = textWidth(
-        this.data.index + 
-        " " + 
-        this.data.profile.name
-        );
+      let nameWidth = textWidth(this.data.index + " " + this.data.profile.name);
 
       fill(39, 39, 42);
       noStroke();
@@ -513,24 +491,18 @@ class Player {
         WIDTH,
         HEIGHT
       );
-      
-      if(ROOM.turn === "NIGHT"){
-        image(
-          images.bgNight, 
-          backgroundX, 
-          this.position.HEIGHT, 
-          WIDTH, 
-          HEIGHT
-          );
+
+      if (ROOM.turn === "NIGHT") {
+        image(images.bgNight, backgroundX, this.position.HEIGHT, WIDTH, HEIGHT);
 
         if (this.data.alive) {
           image(
-            images.woman, 
-            imageX, 
-            HEIGHT * multiplier + 30, 
-            100, 
+            images.woman,
+            imageX,
+            HEIGHT * multiplier + 30,
+            100,
             HEIGHT - 30
-            );
+          );
         } else {
           image(
             images.tombstone,
@@ -538,25 +510,19 @@ class Player {
             HEIGHT * multiplier + 79,
             80,
             80
-          )
+          );
         }
-      } else{
-        image(
-          images.bgDay, 
-          backgroundX, 
-          this.position.HEIGHT, 
-          WIDTH, 
-          HEIGHT
-          );
+      } else {
+        image(images.bgDay, backgroundX, this.position.HEIGHT, WIDTH, HEIGHT);
 
         if (this.data.alive) {
           image(
-            images.woman, 
-            imageX, 
-            HEIGHT * multiplier + 30, 
-            100, 
+            images.woman,
+            imageX,
+            HEIGHT * multiplier + 30,
+            100,
             HEIGHT - 30
-            );
+          );
         } else {
           image(
             images.tombstone,
@@ -564,11 +530,10 @@ class Player {
             HEIGHT * multiplier + 79,
             80,
             80
-          )
+          );
         }
       }
-    
-      
+
       fill(0, 0, 0, 120);
       rect(
         WIDTH * (this.data.index - 1 - 4) + WIDTH / 2 - (nameWidth + 30) / 2,
@@ -578,13 +543,23 @@ class Player {
         5
       );
       textSize(12);
-      if (this.data.profile.id === localStorage.getItem("id") && ROOM.turn === "NIGHT") {
+      if (
+        this.data.profile.id === localStorage.getItem("id") &&
+        ROOM.turn === "NIGHT"
+      ) {
         textStyle(BOLD);
         fill("#1f5b4e");
-      } else if(this.data.profile.id === localStorage.getItem("id") && ROOM.turn === "DAY" || this.data.profile.id === localStorage.getItem("id") && ROOM.turn === "LOBBY" || this.data.profile.id === localStorage.getItem("id") && ROOM.turn === "VOTE" ){ 
+      } else if (
+        (this.data.profile.id === localStorage.getItem("id") &&
+          ROOM.turn === "DAY") ||
+        (this.data.profile.id === localStorage.getItem("id") &&
+          ROOM.turn === "LOBBY") ||
+        (this.data.profile.id === localStorage.getItem("id") &&
+          ROOM.turn === "VOTE")
+      ) {
         textStyle(BOLD);
         fill("#22323f");
-      }else {
+      } else {
         fill(255);
       }
       text(
@@ -599,18 +574,11 @@ class Player {
       };
     } else if (this.data.index <= 12) {
       const backgroundX =
-        WIDTH * 
-        (this.data.index - 1 - 8) + 
-        margin * 
-        (this.data.index - 1 - 8);
+        WIDTH * (this.data.index - 1 - 8) + margin * (this.data.index - 1 - 8);
 
       const imageX = backgroundX + 30;
 
-      let nameWidth = textWidth(
-        this.data.index + 
-        " " + 
-        this.data.profile.name
-        );
+      let nameWidth = textWidth(this.data.index + " " + this.data.profile.name);
 
       fill(39, 39, 42);
       noStroke();
@@ -620,62 +588,48 @@ class Player {
         WIDTH,
         HEIGHT
       );
-      
-      if(ROOM.turn === "NIGHT"){
-      image(
-        images.bgNight, 
-        backgroundX, 
-        this.position.HEIGHT,
-        WIDTH, 
-        HEIGHT
-        );
 
-      if (this.data.alive) {
-        image(
-          images.woman, 
-          imageX, 
-          HEIGHT * 
-          multiplier + 30, 
-          100, 
-          HEIGHT - 30
-          );
-      } else {
-        image(
-          images.tombstone,
-          imageX + 15,
-          HEIGHT * multiplier + 79,
-          80,
-          80
-        )
-      }
-    } else {
-      image(
-        images.bgDay, 
-        backgroundX, 
-        this.position.HEIGHT,
-        WIDTH, 
-        HEIGHT
-        );
+      if (ROOM.turn === "NIGHT") {
+        image(images.bgNight, backgroundX, this.position.HEIGHT, WIDTH, HEIGHT);
 
-      if (this.data.alive) {
-        image(
-          images.woman, 
-          imageX, 
-          HEIGHT * 
-          multiplier + 30, 
-          100, 
-          HEIGHT - 30
+        if (this.data.alive) {
+          image(
+            images.woman,
+            imageX,
+            HEIGHT * multiplier + 30,
+            100,
+            HEIGHT - 30
           );
+        } else {
+          image(
+            images.tombstone,
+            imageX + 15,
+            HEIGHT * multiplier + 79,
+            80,
+            80
+          );
+        }
       } else {
-        image(
-          images.tombstone,
-          imageX + 15,
-          HEIGHT * multiplier + 79,
-          80,
-          80
-        )
+        image(images.bgDay, backgroundX, this.position.HEIGHT, WIDTH, HEIGHT);
+
+        if (this.data.alive) {
+          image(
+            images.woman,
+            imageX,
+            HEIGHT * multiplier + 30,
+            100,
+            HEIGHT - 30
+          );
+        } else {
+          image(
+            images.tombstone,
+            imageX + 15,
+            HEIGHT * multiplier + 79,
+            80,
+            80
+          );
+        }
       }
-    }
       fill(0, 0, 0, 120);
       rect(
         WIDTH * (this.data.index - 1 - 8) + WIDTH / 2 - (nameWidth + 30) / 2,
@@ -709,7 +663,7 @@ class Player {
         WIDTH * (this.data.index - 1 - 8) + WIDTH / 2 - nameWidth / 2,
         HEIGHT * multiplier + HEIGHT / 5 - 4
       );
-      
+
       this.position = {
         WIDTH: WIDTH * (this.data.index - 1 - 8),
         HEIGHT: HEIGHT * multiplier,
@@ -794,7 +748,6 @@ class Player {
     //     });
     //   }
     // }
-    pop();
   }
 
   clicked(mouseX, mouseY) {
