@@ -1,7 +1,7 @@
 name: Push Front docker image to Dockerhub
 
 on:
-  pull_request: 
+  push: 
     branches: 
       - main
 
