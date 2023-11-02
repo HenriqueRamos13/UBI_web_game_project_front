@@ -10,6 +10,8 @@ async function register(e) {
     password: form.password.value,
   };
 
+  const errorP = document.getElementById("error");
+
   try {
     const response = await fetch(`${API_URL}/signup`, {
       method: "POST",
@@ -21,13 +23,13 @@ async function register(e) {
     });
 
     if (response.ok) {
-      alert("Registration successful. You can now log in.");
+      window.location.href = "/index.html";
     } else {
       const errorData = await response.json();
-      alert("Registration error: " + errorData.message);
+      errorP.innerText = "Error occurred while signing up";
     }
   } catch (error) {
-    alert("An error occurred: " + error.message);
+    errorP.innerText = "Error occurred while signing up";
   }
 }
 

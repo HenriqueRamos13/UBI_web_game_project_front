@@ -97,7 +97,6 @@ socket.on(SocketOnEvents.PLAYERS, (data) => {
   );
 
   if (CLICKED_PLAYER != null) {
-    //alert(CLICKED_PLAYER)
   }
 
   //if (ROOM.turn === "LOBBY") return;

@@ -8,6 +8,8 @@ async function login(e) {
     password: form.password.value,
   };
 
+  const errorP = document.getElementById("error");
+
   fetch(`${API_URL}/auth`, {
     method: "POST",
     headers: {
@@ -23,10 +25,12 @@ async function login(e) {
         localStorage.setItem("id", x.id);
         window.location.href = "/game.html";
       } else {
-        alert("erro " + x.message);
+        errorP.innerText = "Invalid email or password";
       }
     })
-    .catch((x) => alert(x.message));
+    .catch((x) => {
+      errorP.innerText = "Invalid email or password";
+    });
 }
 
 document.getElementById("login").addEventListener("submit", login);
