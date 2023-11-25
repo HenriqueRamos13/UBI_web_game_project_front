@@ -122,17 +122,28 @@ socket.on(SocketOnEvents.PLAYERS, (data) => {
       `;
   });
   if (selfPlayer.data.role.name) {
-    powersDiv.innerHTML = `
-    <div class="w-full flex items-center justify-center flex-col p-8" onclick="clickPower()">
-      <p class="text-white">${selfPlayer.data.role.team}</p>
+    document.querySelector("#skill-button").innerHTML = `
       <img
-        class="inline-block h-14 w-14 rounded-full"
+        class="inline-block h-[25px] w-[25px]"
         src="${selfPlayer.data.role.image}"
         alt=""
-      />
-      <p class="text-white">Habilidade</p>
-      <p class="text-center text-white">${selfPlayer.data.role.description}</p>
-    </div>
+      /> 
+    `;
+
+    powersDiv.innerHTML = `
+    <div class="w-full flex items-center justify-between flex-row p-4 gap-4" onclick="clickPower()">
+      <div class="w-[100px] h-[100px] bg-zinc-700 flex justify-center items-center rounded-md">
+        <img
+          class="inline-block h-[50px] w-[50px]"
+          src="${selfPlayer.data.role.image}"
+          alt=""
+        />    
+      </div>
+      <div class="w-[90%] flex-col items-start justify-evenly">
+        <p class="text-white">You are: ${selfPlayer.data.role.name}</p>
+        <p class="text-left text-white text-xs">${selfPlayer.data.role.description}</p>
+      </div>
+      </div>
     `;
   } else {
     powersDiv.innerHTML = `
@@ -382,7 +393,7 @@ class Player {
 
         if (this.data.alive) {
           image(
-            images.woman,
+            this.data.profile.gender === "Female" ? images.woman : images.man,
             imageX,
             HEIGHT * multiplier + 50,
             110,
@@ -402,7 +413,7 @@ class Player {
 
         if (this.data.alive) {
           image(
-            images.woman,
+            this.data.profile.gender === "Female" ? images.woman : images.man,
             imageX,
             HEIGHT * multiplier + 50,
             110,
@@ -496,7 +507,7 @@ class Player {
 
         if (this.data.alive) {
           image(
-            images.woman,
+            this.data.profile.gender === "Female" ? images.woman : images.man,
             imageX,
             HEIGHT * multiplier + 30,
             100,
@@ -516,7 +527,7 @@ class Player {
 
         if (this.data.alive) {
           image(
-            images.woman,
+            this.data.profile.gender === "Female" ? images.woman : images.man,
             imageX,
             HEIGHT * multiplier + 30,
             100,
@@ -593,7 +604,7 @@ class Player {
 
         if (this.data.alive) {
           image(
-            images.woman,
+            this.data.profile.gender === "Female" ? images.woman : images.man,
             imageX,
             HEIGHT * multiplier + 30,
             100,
@@ -613,7 +624,7 @@ class Player {
 
         if (this.data.alive) {
           image(
-            images.woman,
+            this.data.profile.gender === "Female" ? images.woman : images.man,
             imageX,
             HEIGHT * multiplier + 30,
             100,
@@ -685,7 +696,13 @@ class Player {
 
       image(images.bgDay, backgroundX, this.position.HEIGHT, WIDTH, HEIGHT);
       if (this.data.alive) {
-        image(images.woman, imageX, HEIGHT * multiplier + 30, 100, HEIGHT - 30);
+        image(
+          this.data.profile.gender === "Female" ? images.woman : images.man,
+          imageX,
+          HEIGHT * multiplier + 30,
+          100,
+          HEIGHT - 30
+        );
       }
       fill(0, 0, 0, 120);
       rect(
