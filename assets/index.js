@@ -122,13 +122,13 @@ socket.on(SocketOnEvents.PLAYERS, (data) => {
       `;
   });
   if (selfPlayer.data.role.name) {
-    document.querySelector("#skill-button").innerHTML = `
-      <img
-        class="inline-block h-[25px] w-[25px]"
-        src="${selfPlayer.data.role.image}"
-        alt=""
-      /> 
-    `;
+    // document.querySelector("#skill-button").innerHTML = `
+    //   <img
+    //     class="inline-block h-[25px] w-[25px]"
+    //     src="${selfPlayer.data.role.image}"
+    //     alt=""
+    //   />
+    // `;
 
     powersDiv.innerHTML = `
     <div class="w-full flex items-center justify-between flex-row p-4 gap-4" onclick="clickPower()">
